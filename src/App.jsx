@@ -1,4 +1,5 @@
 import {useState} from "react";
+import './App.css';
 
 export default function App() {
   function getCurrentTime() {
@@ -14,7 +15,8 @@ export default function App() {
     const string = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
     return {time, string};
   }
-
+  const Timestamp=Math.floor(Date.now()/1000)
+  const [MerchantID,setMerchantID]=useState("3002607")
   const [Unit, setUnit] = useState(1);
   const [TotalAmount, setTotalAmount] = useState(100);
   const [Name, setName] = useState("測試帳號三");
@@ -22,7 +24,6 @@ export default function App() {
   const [Email, setEmail] = useState("3002607@test.com");
   const [RememberCard, setRememberCard] = useState(false);
   const price = 100;
-  const MerchantID = "3002607";
   const PaymentUIType = 2;
   const ChoosePaymentList = 0;
   const MerchantTradeDate = getCurrentTime().time;
@@ -35,7 +36,7 @@ export default function App() {
   const ExpireDate = 3;
   const StoreExpireDate_CVS = 10080;
   const StoreExpireDate_BARCODE = 7;
-  const DataBeforeEncrypt = {
+  const Data = {
     "MerchantID": MerchantID,
     "RemeberCard": RememberCard,
     "PaymentUIType": PaymentUIType,
@@ -68,6 +69,11 @@ export default function App() {
       "Email": Email
     }
   };
+const GetTokenByTradePayload={
+  "MerchantID":MerchantID,
+  "RqHeader":{"Timestamp":Timestamp},
+"Data":Data}
+
 
   async function handleSubmit() {
     // try { const response = await.axios.post( "https://ecpg-stage.ecpay.com.tw/Merchant/GetTokenbyTrade", {option:1,} )} catch ( error ) { }
@@ -76,6 +82,29 @@ export default function App() {
   return (
     <>
       <div className="purchase-info">
+      <h2>請選擇帳號</h2>
+      <form>
+          <label className="hover_radio">
+            <input
+              type="radio"
+              name="MerchantID"
+              value="3002607"
+              checked={MerchantID === "3002607"}
+              onChange={() => setMerchantID("3002607")}
+            />
+            3002607(特店測試資料)
+          </label>
+          <label className="hover_radio">
+            <input
+              type="radio"
+              name="MerchantID"
+              value="3003008"
+              checked={MerchantID === "3003008"}
+              onChange={() => setMerchantID("3003008")}
+            />
+            3003008(平台商測試資料)
+          </label>
+        </form>
         <h2>請輸入購買數量</h2>
         <p>價格：{price}元/份</p>
         <p>
@@ -131,9 +160,9 @@ export default function App() {
           />
         </p>
 
-        <label>是否記憶信用卡卡號</label>
+        <div>是否記憶信用卡卡號</div>
         <form>
-          是
+        <label className="hover_radio">
           <input
             type="radio"
             name="RememberCard"
@@ -141,7 +170,9 @@ export default function App() {
             checked={RememberCard === true}
             onChange={() => setRememberCard(true)}
           />
-          否
+          是
+        </label>
+        <label className="hover_radio">
           <input
             type="radio"
             name="RememberCard"
@@ -149,9 +180,11 @@ export default function App() {
             checked={RememberCard === false}
             onChange={() => setRememberCard(false)}
           />
+          否
+        </label>
         </form>
       </div>
-      <button onClick={() => console.log(DataBeforeEncrypt)}>送出</button>
+      <button onClick={() => console.log(GetTokenByTradePayload)}>送出</button>
     </>
   );
 }
