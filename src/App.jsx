@@ -1,6 +1,6 @@
-import { useState } from "react";
+import {useState} from "react";
 import "./App.css";
-import axios from "axios";
+import axios from "axios"; // npm i axios
 
 export default function App() {
   function getCurrentTime() {
@@ -14,7 +14,7 @@ export default function App() {
     const milliseconds = String(now.getMilliseconds()).padStart(3, "0");
     const time = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
     const string = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
-    return { time, string };
+    return {time, string};
   }
   const Timestamp = Math.floor(Date.now() / 1000);
   const [MerchantID, setMerchantID] = useState("3002607");
@@ -39,7 +39,7 @@ export default function App() {
   const StoreExpireDate_BARCODE = 7;
   const Data = {
     MerchantID: MerchantID,
-    RemeberCard: RememberCard,
+    RememberCard: RememberCard,
     PaymentUIType: PaymentUIType,
     ChoosePaymentList: ChoosePaymentList,
     OrderInfo: {
@@ -48,42 +48,45 @@ export default function App() {
       TotalAmount: TotalAmount,
       TradeDesc: TradeDesc,
       ItemName: ItemName,
-      ReturnURL: ReturnURL,
+      ReturnURL: ReturnURL
     },
     CardInfo: {
       OrderResultURL: OrderResultURL,
-      CreditInstallment: CreditInstallment,
+      CreditInstallment: CreditInstallment
     },
-    UnionPayInfo: { OrderResultURL: OrderResultURL },
+    UnionPayInfo: {OrderResultURL: OrderResultURL},
     ATMInfo: {
-      ExpireDate: ExpireDate,
+      ExpireDate: ExpireDate
     },
     CVSInfo: {
-      StoreExpireDate: StoreExpireDate_CVS,
+      StoreExpireDate: StoreExpireDate_CVS
     },
     BARCODEInfo: {
-      StoreExpireDate: StoreExpireDate_BARCODE,
+      StoreExpireDate: StoreExpireDate_BARCODE
     },
     ConsumerInfo: {
       Name: Name,
       Phone: Phone,
-      Email: Email,
-    },
+      Email: Email
+    }
   };
   const GetTokenByTradePayload = {
     MerchantID: MerchantID,
-    RqHeader: { Timestamp: Timestamp },
-    Data: Data,
+    RqHeader: {Timestamp: Timestamp},
+    Data: Data
   };
 
   async function handleSubmit(GetTokenByTradePayload) {
+    console.log("payload", GetTokenByTradePayload);
     try {
       const response = await axios.post(
         " http://localhost:3000/getTokenbyTrade",
         GetTokenByTradePayload
       );
-      console.log(response.data)
-    } catch (error) {console.error(error)}
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -121,7 +124,7 @@ export default function App() {
             type="number"
             min="1"
             max="100"
-            onChange={(e) => {
+            onChange={e => {
               const newUnit = Math.max(1, parseInt(e.target.value) || 0);
               setUnit(newUnit);
               setTotalAmount(newUnit * price);
@@ -139,7 +142,7 @@ export default function App() {
             id="Name"
             type="text"
             maxLength="50"
-            onChange={(e) => setName(e.target.value)}
+            onChange={e => setName(e.target.value)}
             value={Name}
           />
         </p>
@@ -149,7 +152,7 @@ export default function App() {
             id="Phone"
             type="tel"
             maxLength="60"
-            onChange={(e) => {
+            onChange={e => {
               const inputValue = e.target.value.replace(/\D/g, "");
               setPhone(inputValue);
             }}
@@ -162,7 +165,7 @@ export default function App() {
             id="Email"
             type="email"
             maxLength="30"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             value={Email}
           />
         </p>
@@ -191,7 +194,7 @@ export default function App() {
           </label>
         </form>
       </div>
-      <button onClick={() =>  handleSubmit(GetTokenByTradePayload)}>送出</button>
+      <button onClick={() => handleSubmit(GetTokenByTradePayload)}>送出</button>
     </>
   );
 }
