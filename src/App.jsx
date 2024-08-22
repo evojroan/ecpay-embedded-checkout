@@ -1,5 +1,6 @@
-import {useState} from "react";
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import axios from "axios";
 
 export default function App() {
   function getCurrentTime() {
@@ -13,16 +14,16 @@ export default function App() {
     const milliseconds = String(now.getMilliseconds()).padStart(3, "0");
     const time = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
     const string = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
-    return {time, string};
+    return { time, string };
   }
-  const Timestamp=Math.floor(Date.now()/1000)
-  const [MerchantID,setMerchantID]=useState("3002607")
+  const Timestamp = Math.floor(Date.now() / 1000);
+  const [MerchantID, setMerchantID] = useState("3002607");
   const [Unit, setUnit] = useState(1);
   const [TotalAmount, setTotalAmount] = useState(100);
   const [Name, setName] = useState("測試帳號三");
   const [Phone, setPhone] = useState("0912345678");
   const [Email, setEmail] = useState("3002607@test.com");
-  const [RememberCard, setRememberCard] = useState(false);
+  const [RememberCard, setRememberCard] = useState(0);
   const price = 100;
   const PaymentUIType = 2;
   const ChoosePaymentList = 0;
@@ -37,53 +38,59 @@ export default function App() {
   const StoreExpireDate_CVS = 10080;
   const StoreExpireDate_BARCODE = 7;
   const Data = {
-    "MerchantID": MerchantID,
-    "RemeberCard": RememberCard,
-    "PaymentUIType": PaymentUIType,
-    "ChoosePaymentList": ChoosePaymentList,
-    "OrderInfo": {
-      "MerchantTradeDate": MerchantTradeDate,
-      "MerchantTradeNo": MerchantTradeNo,
-      "TotalAmount": TotalAmount,
-      "TradeDesc": TradeDesc,
-      "ItemName": ItemName,
-      "ReturnURL": ReturnURL
+    MerchantID: MerchantID,
+    RemeberCard: RememberCard,
+    PaymentUIType: PaymentUIType,
+    ChoosePaymentList: ChoosePaymentList,
+    OrderInfo: {
+      MerchantTradeDate: MerchantTradeDate,
+      MerchantTradeNo: MerchantTradeNo,
+      TotalAmount: TotalAmount,
+      TradeDesc: TradeDesc,
+      ItemName: ItemName,
+      ReturnURL: ReturnURL,
     },
-    "CardInfo": {
-      "OrderResultURL": OrderResultURL,
-      "CreditInstallment": CreditInstallment
+    CardInfo: {
+      OrderResultURL: OrderResultURL,
+      CreditInstallment: CreditInstallment,
     },
-    "UnionPayInfo": {OrderResultURL: OrderResultURL},
-    "ATMInfo": {
-      "ExpireDate": ExpireDate
+    UnionPayInfo: { OrderResultURL: OrderResultURL },
+    ATMInfo: {
+      ExpireDate: ExpireDate,
     },
-    "CVSInfo": {
-      "StoreExpireDate": StoreExpireDate_CVS
+    CVSInfo: {
+      StoreExpireDate: StoreExpireDate_CVS,
     },
-    "BARCODEInfo": {
-      "StoreExpireDate": StoreExpireDate_BARCODE
+    BARCODEInfo: {
+      StoreExpireDate: StoreExpireDate_BARCODE,
     },
-    "ConsumerInfo": {
-      "Name": Name,
-      "Phone": Phone,
-      "Email": Email
-    }
+    ConsumerInfo: {
+      Name: Name,
+      Phone: Phone,
+      Email: Email,
+    },
   };
-const GetTokenByTradePayload={
-  "MerchantID":MerchantID,
-  "RqHeader":{"Timestamp":Timestamp},
-"Data":Data}
+  const GetTokenByTradePayload = {
+    MerchantID: MerchantID,
+    RqHeader: { Timestamp: Timestamp },
+    Data: Data,
+  };
 
-
-  async function handleSubmit() {
-    // try { const response = await.axios.post( "https://ecpg-stage.ecpay.com.tw/Merchant/GetTokenbyTrade", {option:1,} )} catch ( error ) { }
+  async function handleSubmit(GetTokenByTradePayload) {
+    try {
+      const response = await axios.post(
+        " http://localhost:3000/getTokenbyTrade",
+        GetTokenByTradePayload
+      );
+      console.log(response.data)
+    } catch (error) {console.error(error)}
   }
 
   return (
     <>
       <div className="purchase-info">
-      <h2>請選擇帳號</h2>
-      <form>
+        <h2>請選擇帳號</h2>
+        <form>
           <label className="hover_radio">
             <input
               type="radio"
@@ -114,7 +121,7 @@ const GetTokenByTradePayload={
             type="number"
             min="1"
             max="100"
-            onChange={e => {
+            onChange={(e) => {
               const newUnit = Math.max(1, parseInt(e.target.value) || 0);
               setUnit(newUnit);
               setTotalAmount(newUnit * price);
@@ -132,7 +139,7 @@ const GetTokenByTradePayload={
             id="Name"
             type="text"
             maxLength="50"
-            onChange={e => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             value={Name}
           />
         </p>
@@ -142,7 +149,7 @@ const GetTokenByTradePayload={
             id="Phone"
             type="tel"
             maxLength="60"
-            onChange={e => {
+            onChange={(e) => {
               const inputValue = e.target.value.replace(/\D/g, "");
               setPhone(inputValue);
             }}
@@ -155,36 +162,36 @@ const GetTokenByTradePayload={
             id="Email"
             type="email"
             maxLength="30"
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             value={Email}
           />
         </p>
 
         <div>是否記憶信用卡卡號</div>
         <form>
-        <label className="hover_radio">
-          <input
-            type="radio"
-            name="RememberCard"
-            value="true"
-            checked={RememberCard === true}
-            onChange={() => setRememberCard(true)}
-          />
-          是
-        </label>
-        <label className="hover_radio">
-          <input
-            type="radio"
-            name="RememberCard"
-            value="false"
-            checked={RememberCard === false}
-            onChange={() => setRememberCard(false)}
-          />
-          否
-        </label>
+          <label className="hover_radio">
+            <input
+              type="radio"
+              name="RememberCard"
+              value="1"
+              checked={RememberCard === 1}
+              onChange={() => setRememberCard(1)}
+            />
+            是
+          </label>
+          <label className="hover_radio">
+            <input
+              type="radio"
+              name="RememberCard"
+              value="0"
+              checked={RememberCard === 0}
+              onChange={() => setRememberCard(0)}
+            />
+            否
+          </label>
         </form>
       </div>
-      <button onClick={() => console.log(GetTokenByTradePayload)}>送出</button>
+      <button onClick={() =>  handleSubmit(GetTokenByTradePayload)}>送出</button>
     </>
   );
 }
