@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "../App.css";
 import axios from "axios"; // npm i axios
+import {Link} from 'react-router-dom' //   npm install react-router-dom
 
 export default function Input() {
   function getCurrentTime() {
@@ -96,6 +97,10 @@ export default function Input() {
       console.error(error);
     }
   }
+
+  // 待完成：
+  //1. useNavigate() 轉到 /payment
+  //2. token 要不要改給  App?
 
   // useEffect(() => {
   //   function initializeECPay (){
@@ -226,9 +231,10 @@ export default function Input() {
             </label>
           </form>
         </div>
-        <button onClick={() => handleSubmit(GetTokenByTradePayload)}>
-          送出
+       <button onClick={() => handleSubmit(GetTokenByTradePayload)}>
+        送出
         </button>
+        
       </div>
       
       <div id = "ECPayPayment" className="PaymentUI"></div>
