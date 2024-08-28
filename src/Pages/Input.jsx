@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import "../App.css";
 import axios from "axios"; // npm i axios
-import {Link} from 'react-router-dom' //   npm install react-router-dom
+import {useNavigate} from 'react-router-dom' //   npm install react-router-dom
 
-export default function Input() {
+
+export default function Input({setToken}) {
   function getCurrentTime() {
     const now = new Date();
     const year = now.getFullYear();
@@ -17,11 +18,12 @@ export default function Input() {
     const string = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
     return { time, string };
   }
+
+  const navigate=useNavigate()
   const ServerType = "Stage"; // Stage or Prod
   const IsLoading = 1; // 1 or 0
   const Timestamp = Math.floor(Date.now() / 1000);
-  const [Token, setToken] = useState("");
-  const [PayToken, setPayToken] = useState("");
+
   const [MerchantID, setMerchantID] = useState("3002607");
   const MerchantMemberID = "member3002607";
   const [Unit, setUnit] = useState(1);
@@ -93,37 +95,16 @@ export default function Input() {
 
       setToken(response.data);
       console.log(response.data);
+      
+     
+      navigate("/payment")
     } catch (error) {
       console.error(error);
     }
   }
 
-  // 待完成：
-  //1. useNavigate() 轉到 /payment
-  //2. token 要不要改給  App?
+ 
 
-  // useEffect(() => {
-  //   function initializeECPay (){
-  //     if (window.ECPay) {
-  //       window.ECPay.initialize(ServerType, IsLoading, function (errMsg) {
-  //         if (errMsg) {
-  //           console.error("ECPay SDK 初始化錯誤:", errMsg);
-  //         } else {
-  //           console.log("ECPay SDK 初始化成功");
-  //         }
-  //       });
-  //     } else {
-  //       alert("ECPay SDK 未正確加載");
-  //     }
-  //   };
-
-  //   if (document.readyState === "complete") {
-  //     initializeECPay();
-  //   } else {
-  //     window.addEventListener("load", initializeECPay);
-  //     return () => window.removeEventListener("load", initializeECPay);
-  //   }
-  // }, []);
 
   return (
     <>
