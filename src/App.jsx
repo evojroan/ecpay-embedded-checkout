@@ -10,7 +10,7 @@ export default function App() {
   const [ServerType,setServerType]=useState("Stage")
   const [IsLoading,setIsLoading]=useState(1)
   const [Version,setVersion]=useState("V2")
-
+  const mylang ="eng!"
 
 
   return (

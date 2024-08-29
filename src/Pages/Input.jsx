@@ -86,7 +86,7 @@ export default function Input({setToken}) {
   };
 
   async function handleSubmit(GetTokenByTradePayload) {
-    console.log("payload", GetTokenByTradePayload);
+    
     try {
       const response = await axios.post(
         " http://localhost:3000/getTokenbyTrade",
@@ -94,7 +94,7 @@ export default function Input({setToken}) {
       );
 
       setToken(response.data);
-      console.log(response.data);
+    
       
      
       navigate("/payment")

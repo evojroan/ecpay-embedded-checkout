@@ -1,42 +1,64 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
+export default function Payment({
+  Token,
+  Language,
+  ServerType,
+  IsLoading,
+  Version,
+}) {
+  const [sdkLoaded, setSdkLoaded] = useState(false);
 
-export default function Payment({Token, Language, ServerType, IsLoading, Version}) {
   useEffect(() => {
-    function initializeECPay (){
-      if (window.ECPay) {
-        window.ECPay.initialize(ServerType, IsLoading, function (errMsg) {
-          if (errMsg) {
-            console.error("ECPay SDK 初始化錯誤:", errMsg);
-          } else {
-            console.log("ECPay SDK 初始化成功");
-          }
-        });
-      } else {
-        alert("ECPay SDK 未正確加載");
-      }
-
-      ECPay.createPayment({Token},{Language},function(errMsg){if(errMsg) {
-        console.error("ECPay SDK 取得付款畫面錯誤:", errMsg);
-      } else {
-        console.log("ECPay SDK 取得付款畫面成功");
-      }},Version)
+    const loadScript = () => {
+      const script = document.createElement('script');
+      script.src = "https://ecpg-stage.ecpay.com.tw/Scripts/sdk-1.0.0.js?t=20210121100116";
+      script.async = true;
+      script.onload = () => {
+        setSdkLoaded(true);
+      };
+      document.body.appendChild(script);
     };
 
-    if (document.readyState === "complete") {
-      initializeECPay();
+    if (window.jQuery) {
+      loadScript();
     } else {
-      window.addEventListener("load", initializeECPay);
-      return () => window.removeEventListener("load", initializeECPay);
+      console.error('jQuery is not loaded. ECPay SDK may not work correctly.');
     }
+
+    return () => {
+      const script = document.querySelector('script[src="https://ecpg-stage.ecpay.com.tw/Scripts/sdk-1.0.0.js?t=20210121100116"]');
+      if (script) {
+        document.body.removeChild(script);
+      }
+    };
   }, []);
 
-
+  useEffect(() => {
+    if (sdkLoaded && window.ECPay) {
+      ECPay.initialize(ServerType, IsLoading, function (errMsg) {
+        if (errMsg) {
+          console.error(errMsg);
+        } else {
+          ECPay.createPayment(
+            Token,
+            Language,
+            function (errMsg) {
+              if (errMsg) {
+                console.error(errMsg);
+              }
+            },
+            Version
+          );
+        }
+      });
+    }
+  }, [sdkLoaded, Token, Language, ServerType, IsLoading, Version]);
 
   return (
     <div>
       <h2>綠界站內付 2.0 付款畫面</h2>
-      {Token}
+      <div id="ECPayPayment"></div>
     </div>
   );
 }
