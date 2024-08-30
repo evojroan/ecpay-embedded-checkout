@@ -3,7 +3,7 @@ import "../App.css";
 import axios from "axios"; // npm i axios
 import {useNavigate} from "react-router-dom"; //   npm install react-router-dom
 
-export default function Input({setToken}) {
+export default function Input({setToken,MerchantID,setMerchantID, MerchantTradeNo, setMerchantTradeNo}) {
   function getCurrentTime() {
     const now = new Date();
     const year = now.getFullYear();
@@ -17,13 +17,11 @@ export default function Input({setToken}) {
     const string = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
     return {time, string};
   }
-
+//
   const navigate = useNavigate();
-
   const Timestamp = Math.floor(Date.now() / 1000);
-
-  const [MerchantID, setMerchantID] = useState("3002607");
   const MerchantMemberID = "member3002607";
+  
   const [Unit, setUnit] = useState(1);
   const [TotalAmount, setTotalAmount] = useState(100);
   const [Name, setName] = useState("測試帳號三");
@@ -34,7 +32,6 @@ export default function Input({setToken}) {
   const PaymentUIType = 2;
   const ChoosePaymentList = 0;
   const MerchantTradeDate = getCurrentTime().time;
-  const MerchantTradeNo = `emb${getCurrentTime().string}`;
   const ReturnURL = "https://www.ecpay.com.tw/";
   const OrderResultURL = "https://www.ecpay.com.tw/";
   const TradeDesc = "站內付 2.0 範例";
@@ -84,12 +81,15 @@ export default function Input({setToken}) {
   };
 
   async function handleSubmit(GetTokenByTradePayload) {
+
+
+  console.log('GetTokenByTradePayload: ',GetTokenByTradePayload)
     try {
       const response = await axios.post(
-        " http://localhost:3000/getTokenbyTrade",
+        " http://localhost:3000/GetTokenbyTrade",
         GetTokenByTradePayload
       );
-
+console.log(' GetTokenByTrade Response= ', response.data)
       setToken(response.data);
 
       navigate("/payment");
@@ -100,6 +100,7 @@ export default function Input({setToken}) {
 
   return (
     <>
+    
       <div className="paramsInput">
         <div className="purchase-info">
           <h2>請選擇帳號</h2>
