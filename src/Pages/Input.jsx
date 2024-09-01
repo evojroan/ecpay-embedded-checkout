@@ -3,7 +3,13 @@ import "../App.css";
 import axios from "axios"; // npm i axios
 import {useNavigate} from "react-router-dom"; //   npm install react-router-dom
 
-export default function Input({setToken,MerchantID,setMerchantID, MerchantTradeNo, setMerchantTradeNo}) {
+export default function Input({
+  setToken,
+  MerchantID,
+  setMerchantID,
+  MerchantTradeNo,
+  setMerchantTradeNo
+}) {
   function getCurrentTime() {
     const now = new Date();
     const year = now.getFullYear();
@@ -17,11 +23,11 @@ export default function Input({setToken,MerchantID,setMerchantID, MerchantTradeN
     const string = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
     return {time, string};
   }
-//
+  //
   const navigate = useNavigate();
   const Timestamp = Math.floor(Date.now() / 1000);
   const MerchantMemberID = "member3002607";
-  
+
   const [Unit, setUnit] = useState(1);
   const [TotalAmount, setTotalAmount] = useState(100);
   const [Name, setName] = useState("測試帳號三");
@@ -80,16 +86,27 @@ export default function Input({setToken,MerchantID,setMerchantID, MerchantTradeN
     Data: Data
   };
 
-  async function handleSubmit(GetTokenByTradePayload) {
+  async function handleSubmit() {
+    const newMerchantTradeNo = `emb${getCurrentTime().string}`;
+    setMerchantTradeNo(newMerchantTradeNo);
 
+    const updatedPayload = {
+      ...GetTokenByTradePayload,
+      Data: {
+        ...GetTokenByTradePayload.Data,
+        OrderInfo: {
+          ...GetTokenByTradePayload.Data.OrderInfo,
+          MerchantTradeNo: newMerchantTradeNo
+        }
+      }
+    };
 
-  console.log('GetTokenByTradePayload: ',GetTokenByTradePayload)
     try {
       const response = await axios.post(
-        " http://localhost:3000/GetTokenbyTrade",
-        GetTokenByTradePayload
+        "http://localhost:3000/GetTokenbyTrade",
+        updatedPayload
       );
-console.log(' GetTokenByTrade Response= ', response.data)
+
       setToken(response.data);
 
       navigate("/payment");
@@ -100,7 +117,6 @@ console.log(' GetTokenByTrade Response= ', response.data)
 
   return (
     <>
-    
       <div className="paramsInput">
         <div className="purchase-info">
           <h2>請選擇帳號</h2>
@@ -205,9 +221,7 @@ console.log(' GetTokenByTrade Response= ', response.data)
             </label>
           </form>
         </div>
-        <button onClick={() => handleSubmit(GetTokenByTradePayload)}>
-          送出
-        </button>
+        <button onClick={handleSubmit}>送出</button>
       </div>
 
       <div

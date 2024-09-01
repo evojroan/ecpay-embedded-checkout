@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react";
+import {useEffect, useState} from "react";
 import axios from "axios"; // npm i axios
 export default function Payment({
   MerchantID,
@@ -7,33 +7,29 @@ export default function Payment({
   Language,
   ServerType,
   IsLoading,
-  Version,
+  Version
 }) {
-
-  const [PayToken,setPayToken]=useState("")
+  const [PayToken, setPayToken] = useState("");
 
   const Timestamp = Math.floor(Date.now() / 1000);
-  const Data={
-    PlatformID:"",
-    MerchantID:MerchantID,
-    PayToken:PayToken,
-    MerchantTradeNo:MerchantTradeNo
-  }
+  const Data = {
+    PlatformID: "",
+    MerchantID: MerchantID,
+    PayToken: PayToken,
+    MerchantTradeNo: MerchantTradeNo
+  };
 
-  const CreatePaymentPayload= {
+  const CreatePaymentPayload = {
     MerchantID: MerchantID,
     RqHeader: {Timestamp: Timestamp},
     Data: Data
   };
-
-
 
   useEffect(() => {
     ECPay.initialize(ServerType, IsLoading, function (errMsg) {
       if (errMsg) {
         console.error(errMsg);
       } else {
-        console.log("Token=",Token)
         ECPay.createPayment(
           Token,
           Language,
@@ -48,26 +44,25 @@ export default function Payment({
     });
   }, [Token, Language, ServerType, IsLoading, Version]);
 
-  async function handleSubmit(){
-
-    try{
+  async function handleSubmit() {
+    try {
       const response = await axios.post(
         " http://localhost:3000/CreatePayment",
         CreatePaymentPayload
       );
-      console.log("CreatePayment結果：",response.data)
+      console.log("CreatePayment結果：", response.data);
       //接下來要 Navigate 到 OrderResuktURL?
-    }catch (error) {
+    } catch (error) {
       console.error(error);
     }
   }
 
   useEffect(() => {
     if (PayToken) {
-      console.log("PayToken取得 ",PayToken)
+      console.log("PayToken取得 ", PayToken);
       handleSubmit();
     }
-  }, [PayToken]);
+  }, []);
 
   function handlePayment() {
     ECPay.getPayToken(function (paymentInfo, errMsg) {
@@ -75,16 +70,12 @@ export default function Payment({
         console.error(errMsg);
         return;
       }
-      setPayToken(paymentInfo.PayToken)
-     
+      setPayToken(paymentInfo.PayToken);
+      console.log(CreatePaymentPayload);
+
       //console.log("CreatePaymentPayload: ",CreatePaymentPayload)
-
     });
-
-
   }
-
- 
 
   return (
     <div>
@@ -93,7 +84,6 @@ export default function Payment({
         <div id="ECPayPayment"></div>
         <button onClick={handlePayment}>付款</button>
       </div>
-    
     </div>
   );
 }
