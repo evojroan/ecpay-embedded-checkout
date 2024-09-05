@@ -8,7 +8,7 @@ export default function Input({
   MerchantID,
   setMerchantID,
   MerchantTradeNo,
-  setMerchantTradeNo
+  MerchantTradeDate
 }) {
   function getCurrentTime() {
     const now = new Date();
@@ -37,7 +37,6 @@ export default function Input({
   const price = 100;
   const PaymentUIType = 2;
   const ChoosePaymentList = 0;
-  const MerchantTradeDate = getCurrentTime().time;
   const ReturnURL = "https://www.ecpay.com.tw/";
   const OrderResultURL = "https://www.ecpay.com.tw/";
   const TradeDesc = "站內付 2.0 範例";
@@ -87,28 +86,27 @@ export default function Input({
   };
 
   async function handleSubmit() {
-    const newMerchantTradeNo = `emb${getCurrentTime().string}`;
-    setMerchantTradeNo(newMerchantTradeNo);
-
-    const updatedPayload = {
-      ...GetTokenByTradePayload,
-      Data: {
-        ...GetTokenByTradePayload.Data,
-        OrderInfo: {
-          ...GetTokenByTradePayload.Data.OrderInfo,
-          MerchantTradeNo: newMerchantTradeNo
-        }
-      }
-    };
+    // const updatedPayload = {
+    //   ...GetTokenByTradePayload,
+    //   Data: {
+    //     ...GetTokenByTradePayload.Data,
+    //     OrderInfo: {
+    //       ...GetTokenByTradePayload.Data.OrderInfo,
+    //     }
+    //   }
+    // };
 
     try {
       const response = await axios.post(
         "http://localhost:3000/GetTokenbyTrade",
-        updatedPayload
+        //updatedPayload
+        GetTokenByTradePayload
       );
 
       setToken(response.data);
-
+ console.log("GetTokenbyTrade= ",
+  //updatedPayload
+  GetTokenByTradePayload)
       navigate("/payment");
     } catch (error) {
       console.error(error);
