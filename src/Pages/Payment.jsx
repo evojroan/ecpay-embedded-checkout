@@ -1,4 +1,5 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; //   npm install react-router-dom
 import axios from "axios"; // npm i axios
 export default function Payment({
   MerchantID,
@@ -7,25 +8,27 @@ export default function Payment({
   Language,
   ServerType,
   IsLoading,
-  Version
+  Version,
 }) {
   const [PayToken, setPayToken] = useState("");
-  const[ThreeDURL,setThreeDURL]=useState("")
+  const [ThreeDURL, setThreeDURL] = useState("");
   const Timestamp = Math.floor(Date.now() / 1000);
   const Data = {
     PlatformID: "",
     MerchantID: MerchantID,
     PayToken: PayToken,
-    MerchantTradeNo: MerchantTradeNo
+    MerchantTradeNo: MerchantTradeNo,
   };
 
   const CreatePaymentPayload = {
     MerchantID: MerchantID,
-    RqHeader: {Timestamp: Timestamp},
-    Data: Data
+    RqHeader: { Timestamp: Timestamp },
+    Data: Data,
   };
 
- //初始化付款畫面
+  const navigate = useNavigate();
+
+  //初始化付款畫面
   useEffect(() => {
     ECPay.initialize(ServerType, IsLoading, function (errMsg) {
       if (errMsg) {
@@ -45,41 +48,36 @@ export default function Payment({
     });
   }, [Token, Language, ServerType, IsLoading, Version]);
 
- 
   //等待取得 Paytoken
   useEffect(() => {
     if (PayToken) {
-      console.log("PayToken取得 ", PayToken);
-       handleCreatePayment();
+      handleCreatePayment();
     }
+  }, [PayToken]);
 
-}, [PayToken]);
+  //等待取得 ThreeDURL
+  useEffect(() => {
+    if (ThreeDURL) {
+      window.location.href = ThreeDURL.replace(/^"|"$/g, "");
+    }
+  }, [ThreeDURL]);
 
-//等待取得 ThreeDURL
-useEffect(() => {
-  if (ThreeDURL) {
-    console.log("ThreeDURL取得= ", ThreeDURL);
-    
-  }
-
-}, [ThreeDURL]);
-
-//取得 Paytoken 後，立即以 CreatePaymentPayload 呼叫後端
+  //取得 Paytoken 後，立即以 CreatePaymentPayload 呼叫後端
   async function handleCreatePayment() {
     try {
       const response = await axios.post(
         "http://localhost:3000/CreatePayment",
         CreatePaymentPayload
-      );   
-      setThreeDURL(JSON.stringify(response.data.ThreeDInfo.ThreeDURL))
-      console.log("CreatePayment結果：", response.data);
+      );
+      setThreeDURL(JSON.stringify(response.data.ThreeDInfo.ThreeDURL));
+
       //CreatePayment 還要 3D 驗證。
     } catch (error) {
       console.error(error);
     }
   }
 
-//SDK 取得 Paytoken
+  //SDK 取得 Paytoken
   function handleGetPayToken() {
     ECPay.getPayToken(function (paymentInfo, errMsg) {
       if (errMsg) {
@@ -87,7 +85,6 @@ useEffect(() => {
         return;
       }
       setPayToken(paymentInfo.PayToken);
-   
     });
   }
 
