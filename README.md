@@ -4,9 +4,13 @@
 1. 到了 payment 頁面，console 錯誤訊息： Uncaught TypeError: i is not a function
 2. 付款畫面的語言有時會自動改
 
+
 ## 待優化功能
 ### 所有頁面
 1. 如果有 error，要於前端顯示，不要只顯示於 console.log
+
+### Input 頁面
+1. 購買數量的  <input>，手動輸入數字時可以超過 max
 
 ### Payment 頁面：
 1. 付款按鈕與站內付畫面一起出來
