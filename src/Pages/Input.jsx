@@ -1,14 +1,14 @@
-import { useState } from "react";
+import {useState} from "react";
 import "../App.css";
 import axios from "axios"; // npm i axios
-import { useNavigate } from "react-router-dom"; //   npm install react-router-dom
+import {useNavigate} from "react-router-dom"; //   npm install react-router-dom
 
 export default function Input({
   setToken,
   MerchantID,
   setMerchantID,
   MerchantTradeNo,
-  MerchantTradeDate,
+  MerchantTradeDate
 }) {
   function getCurrentTime() {
     const now = new Date();
@@ -21,7 +21,7 @@ export default function Input({
     const milliseconds = String(now.getMilliseconds()).padStart(3, "0");
     const time = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
     const string = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
-    return { time, string };
+    return {time, string};
   }
   //
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ export default function Input({
   const PaymentUIType = 2;
   const ChoosePaymentList = 0;
   const ReturnURL = "https://www.ecpay.com.tw/";
-  const OrderResultURL = "https://www.ecpay.com.tw/";
+  const OrderResultURL = "http://localhost:3000/OrderResultURL";
   const TradeDesc = "站內付 2.0 範例";
   const ItemName = "測試商品";
   const CreditInstallment = "3,6,12,18,24";
@@ -56,33 +56,33 @@ export default function Input({
       TotalAmount: TotalAmount,
       TradeDesc: TradeDesc,
       ItemName: ItemName,
-      ReturnURL: ReturnURL,
+      ReturnURL: ReturnURL
     },
     CardInfo: {
       OrderResultURL: OrderResultURL,
-      CreditInstallment: CreditInstallment,
+      CreditInstallment: CreditInstallment
     },
-    UnionPayInfo: { OrderResultURL: OrderResultURL },
+    UnionPayInfo: {OrderResultURL: OrderResultURL},
     ATMInfo: {
-      ExpireDate: ExpireDate,
+      ExpireDate: ExpireDate
     },
     CVSInfo: {
-      StoreExpireDate: StoreExpireDate_CVS,
+      StoreExpireDate: StoreExpireDate_CVS
     },
     BARCODEInfo: {
-      StoreExpireDate: StoreExpireDate_BARCODE,
+      StoreExpireDate: StoreExpireDate_BARCODE
     },
     ConsumerInfo: {
       MerchantMemberID: MerchantMemberID,
       Name: Name,
       Phone: Phone,
-      Email: Email,
-    },
+      Email: Email
+    }
   };
   const GetTokenByTradePayload = {
     MerchantID: MerchantID,
-    RqHeader: { Timestamp: Timestamp },
-    Data: Data,
+    RqHeader: {Timestamp: Timestamp},
+    Data: Data
   };
 
   async function handleSubmit() {
@@ -141,7 +141,7 @@ export default function Input({
               type="number"
               min="1"
               max="100"
-              onChange={(e) => {
+              onChange={e => {
                 const newUnit = Math.max(1, parseInt(e.target.value) || 0);
                 setUnit(newUnit);
                 setTotalAmount(newUnit * price);
@@ -159,7 +159,7 @@ export default function Input({
               id="Name"
               type="text"
               maxLength="50"
-              onChange={(e) => setName(e.target.value)}
+              onChange={e => setName(e.target.value)}
               value={Name}
             />
           </p>
@@ -169,7 +169,7 @@ export default function Input({
               id="Phone"
               type="tel"
               maxLength="60"
-              onChange={(e) => {
+              onChange={e => {
                 const inputValue = e.target.value.replace(/\D/g, "");
                 setPhone(inputValue);
               }}
@@ -182,7 +182,7 @@ export default function Input({
               id="Email"
               type="email"
               maxLength="30"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               value={Email}
             />
           </p>
@@ -214,7 +214,9 @@ export default function Input({
         <button onClick={handleSubmit}>送出</button>
       </div>
 
-      <div id="ECPayPayment" className="PaymentUI"></div>
+      <div
+        id="ECPayPayment"
+        className="PaymentUI"></div>
     </>
   );
 }

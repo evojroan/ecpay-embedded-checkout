@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; //   npm install react-router-dom
+import {useEffect, useState} from "react";
 import axios from "axios"; // npm i axios
 export default function Payment({
   MerchantID,
@@ -8,7 +7,7 @@ export default function Payment({
   Language,
   ServerType,
   IsLoading,
-  Version,
+  Version
 }) {
   const [PayToken, setPayToken] = useState("");
   const [ThreeDURL, setThreeDURL] = useState("");
@@ -17,16 +16,14 @@ export default function Payment({
     PlatformID: "",
     MerchantID: MerchantID,
     PayToken: PayToken,
-    MerchantTradeNo: MerchantTradeNo,
+    MerchantTradeNo: MerchantTradeNo
   };
 
   const CreatePaymentPayload = {
     MerchantID: MerchantID,
-    RqHeader: { Timestamp: Timestamp },
-    Data: Data,
+    RqHeader: {Timestamp: Timestamp},
+    Data: Data
   };
-
-  const navigate = useNavigate();
 
   //初始化付款畫面
   useEffect(() => {
