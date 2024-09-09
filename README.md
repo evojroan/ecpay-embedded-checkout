@@ -1,11 +1,14 @@
 # 站內付 2.0
 
+前端頁面：
+https://ecpay-embedded-checkout-git-main-evojroans-projects.vercel.app/
+
 
 
 ## 待完成功能
-- [ ] 1. 付款方式選 ATM 回傳的回傳的付款資訊
-- [ ] 2. 付款方式選 BARCODE 回傳的回傳的付款資訊
-- [ ] 3. 付款方式選 CVS 回傳的回傳的付款資訊
+- [ ] 1. 付款方式選 ATM 回傳的付款資訊
+- [ ] 2. 付款方式選 BARCODE 回傳的付款資訊
+- [ ] 3. 付款方式選 CVS 回傳的付款資訊
 - [ ] 4. ApplePay 付款方式
 - [ ] 5. ReturnURL
 - [ ] 6. OrderResultURL
