@@ -19,10 +19,9 @@ export default function App() {
   }
 
 
-
   const [MerchantID, setMerchantID] = useState("3002607");
   const [Token, setToken] = useState("");
-  const [Language, setLanguage] = useState("ECPay.Language.zhTW");
+ const [Language, setLanguage] = useState(ECPay.Language.zhTW);//ECPay.Language.enUS
   const [ServerType, setServerType] = useState("Stage");
   const [IsLoading, setIsLoading] = useState(1);
   const [Version, setVersion] = useState("V2");

@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios"; // npm i axios
 export default function Payment({
   MerchantID,
@@ -7,8 +7,10 @@ export default function Payment({
   Language,
   ServerType,
   IsLoading,
-  Version
+  Version,
 }) {
+  const [paymentRendered, setPaymentRendered] = useState(false);
+  const [isClicked,setIsClicked]=useState(false)
   const [PayToken, setPayToken] = useState("");
   const [ThreeDURL, setThreeDURL] = useState("");
   const Timestamp = Math.floor(Date.now() / 1000);
@@ -16,34 +18,48 @@ export default function Payment({
     PlatformID: "",
     MerchantID: MerchantID,
     PayToken: PayToken,
-    MerchantTradeNo: MerchantTradeNo
+    MerchantTradeNo: MerchantTradeNo,
   };
 
   const CreatePaymentPayload = {
     MerchantID: MerchantID,
-    RqHeader: {Timestamp: Timestamp},
-    Data: Data
+    RqHeader: { Timestamp: Timestamp },
+    Data: Data,
   };
 
-  //初始化付款畫面
+  const [sdkLoaded, setSdkLoaded] = useState(false);
+
   useEffect(() => {
-    ECPay.initialize(ServerType, IsLoading, function (errMsg) {
-      if (errMsg) {
-        console.error(errMsg);
-      } else {
-        ECPay.createPayment(
-          Token,
-          Language,
-          function (errMsg) {
-            if (errMsg) {
-              console.error(errMsg);
-            }
-          },
-          Version
-        );
+    const checkSDKLoaded = setInterval(() => {
+      if (window.ECPay) {
+        clearInterval(checkSDKLoaded);
+        setSdkLoaded(true);
       }
-    });
-  }, [Token, Language, ServerType, IsLoading, Version]);
+    }, 100);
+
+    return () => clearInterval(checkSDKLoaded);
+  }, []);
+
+  useEffect(() => {
+    if (sdkLoaded) {
+      ECPay.initialize(ServerType, IsLoading, function (errMsg) {
+        if (errMsg) {
+          console.error(errMsg);
+        } else {
+          ECPay.createPayment(
+            Token,
+            Language,
+            function (errMsg) {
+              if (errMsg) {
+                console.error(errMsg);
+              }else{setPaymentRendered(true)}
+            },
+            Version
+          );
+        }
+      });
+    }
+  }, [sdkLoaded, Token, Language, ServerType, IsLoading, Version]);
 
   //等待取得 Paytoken
   useEffect(() => {
@@ -82,17 +98,24 @@ export default function Payment({
         return;
       }
       setPayToken(paymentInfo.PayToken);
+      setIsClicked(true)
     });
   }
 
   return (
     <div>
       <h2>綠界站內付 2.0 付款畫面</h2>
-      {/* {ThreeDURL} */}
-      <div id="PaymentComponent">
-        <div id="ECPayPayment"></div>
-        <button onClick={handleGetPayToken}>付款</button>
-      </div>
+      {sdkLoaded ? (
+        <div id="PaymentComponent">
+          <div id="ECPayPayment"> </div>
+          {paymentRendered && (
+            <button onClick={handleGetPayToken}  disabled={isClicked}>{isClicked?"付款中":"付款"}</button>
+          )}
+         
+        </div>
+      ) : (
+        <p>正在載入支付 SDK...</p>
+      )}
     </div>
   );
 }

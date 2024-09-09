@@ -38,7 +38,7 @@ export default function Input({
   const PaymentUIType = 2;
   const ChoosePaymentList = 0;
   const ReturnURL = "https://www.ecpay.com.tw/";
-  const OrderResultURL = "http://localhost:3000/OrderResultURL";
+  const OrderResultURL = "https://www.ecpay.com.tw/";
   const TradeDesc = "站內付 2.0 範例";
   const ItemName = "測試商品";
   const CreditInstallment = "3,6,12,18,24";
@@ -94,11 +94,7 @@ export default function Input({
       );
 
       setToken(response.data);
-      console.log(
-        "GetTokenbyTrade= ",
-
-        GetTokenByTradePayload
-      );
+     
       navigate("/payment");
     } catch (error) {
       console.error(error);
@@ -142,7 +138,7 @@ export default function Input({
               min="1"
               max="100"
               onChange={e => {
-                const newUnit = Math.max(1, parseInt(e.target.value) || 0);
+                const newUnit = Math.min(100, Math.max(1, parseInt(e.target.value) || 1));
                 setUnit(newUnit);
                 setTotalAmount(newUnit * price);
               }}
