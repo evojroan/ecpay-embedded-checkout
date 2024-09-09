@@ -79,7 +79,7 @@ export default function Payment({
   async function handleCreatePayment() {
     try {
       const response = await axios.post(
-        "http://localhost:3000/CreatePayment",
+        "https://ecpay-embedded-checkout-backend.vercel.app/CreatePayment",
         CreatePaymentPayload
       );
       setThreeDURL(JSON.stringify(response.data.ThreeDInfo.ThreeDURL));
