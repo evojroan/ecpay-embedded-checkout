@@ -3,7 +3,8 @@
 前端頁面：
 https://ecpay-embedded-checkout-git-main-evojroans-projects.vercel.app/
 
-
+後端 Repo：
+https://github.com/evojroan/ecpay_embedded_checkout_backend
 
 ## 待完成功能
 - [ ] 1. 付款方式選 ATM 回傳的付款資訊
@@ -12,6 +13,7 @@ https://ecpay-embedded-checkout-git-main-evojroans-projects.vercel.app/
 - [ ] 4. ApplePay 付款方式
 - [ ] 5. ReturnURL
 - [ ] 6. OrderResultURL
+- [ ] 7. 於前端切換語言
 
 ## 待優化功能
 - [ ] 1. 所有頁面如果有 error，要於前端顯示，不要只顯示於 console.log

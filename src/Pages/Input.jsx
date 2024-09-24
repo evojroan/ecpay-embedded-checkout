@@ -10,19 +10,7 @@ export default function Input({
   MerchantTradeNo,
   MerchantTradeDate
 }) {
-  function getCurrentTime() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    const seconds = String(now.getSeconds()).padStart(2, "0");
-    const milliseconds = String(now.getMilliseconds()).padStart(3, "0");
-    const time = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
-    const string = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
-    return {time, string};
-  }
+  
   //
   const navigate = useNavigate();
   const Timestamp = Math.floor(Date.now() / 1000);
@@ -38,7 +26,7 @@ export default function Input({
   const PaymentUIType = 2;
   const ChoosePaymentList = 0;
   const ReturnURL = "https://www.ecpay.com.tw/";
-  const OrderResultURL = "https://www.ecpay.com.tw/";
+  const OrderResultURL = "http://localhost:3000/OrderResultURL";
   const TradeDesc = "站內付 2.0 範例";
   const ItemName = "測試商品";
   const CreditInstallment = "3,6,12,18,24";

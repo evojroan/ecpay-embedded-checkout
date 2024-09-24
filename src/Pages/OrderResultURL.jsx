@@ -1,20 +1,29 @@
 import axios from "axios"; // npm i axios
 
+const ws = new WebSocket('ws://localhost:3000')
+
 export default function OrderResultURL(){
+    const [decryptedData, setDecryptedData] = useState(null);
 
-    useEffect(()=>{},[])
+    useEffect(()=>{
+        ws.onopen=()=>{console.log("WebSocket 已連接")}
+        ws.onmessage=(event)=>{
+            try{
+                const data=JSON.parse(event.data)
+                setDecryptedData(data)
+            }catch(error){ console.error('解析接收到的數據時出錯:', error);}
+        }
+
+        return () => {
+            ws.close();
+          };
+
+    },[])
 
 
-    return(<>
-謝謝您的購買！以下是您的購買資訊：
-<p>
-廠商訂單編號：<br/>
-交易金額：<br/>
-</p>
-以下是所有回傳訊息：
-<p>(解密後 Data)</p>
-
-
-
-    </>)
-}
+    return (
+        <>
+        購買結果：
+        <p>{decryptedData}</p>
+        </>
+      );}
