@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios"; // npm i axios
+import { useNavigate } from "react-router-dom"; //   npm install react-router-dom
+
 export default function Payment({
   MerchantID,
   MerchantTradeNo,
+  setPaymentInfo,
   Token,
   Language,
   ServerType,
   IsLoading,
   Version,
 }) {
+  const navigate = useNavigate();
   const [paymentRendered, setPaymentRendered] = useState(false);
-  const [isClicked,setIsClicked]=useState(false)
+  const [isClicked, setIsClicked] = useState(false);
   const [PayToken, setPayToken] = useState("");
   const [ThreeDURL, setThreeDURL] = useState("");
   const Timestamp = Math.floor(Date.now() / 1000);
@@ -52,7 +56,9 @@ export default function Payment({
             function (errMsg) {
               if (errMsg) {
                 console.error(errMsg);
-              }else{setPaymentRendered(true)}
+              } else {
+                setPaymentRendered(true);
+              }
             },
             Version
           );
@@ -82,7 +88,15 @@ export default function Payment({
         "https://ecpay-embedded-checkout-backend.vercel.app/CreatePayment",
         CreatePaymentPayload
       );
-      setThreeDURL(JSON.stringify(response.data.ThreeDInfo.ThreeDURL));
+
+      if (response.data.ThreeDInfo.ThreeDURL) {
+        setThreeDURL(JSON.stringify(response.data.ThreeDInfo.ThreeDURL));
+      } else {
+        setPaymentInfo(response.data);
+         console.log(" Payment.jsx拿到：",response.data)
+        
+        navigate("/PaymentInfoPage");
+      }
 
       //CreatePayment 還要 3D 驗證。
     } catch (error) {
@@ -98,7 +112,7 @@ export default function Payment({
         return;
       }
       setPayToken(paymentInfo.PayToken);
-      setIsClicked(true)
+      setIsClicked(true);
     });
   }
 
@@ -109,9 +123,10 @@ export default function Payment({
         <div id="PaymentComponent">
           <div id="ECPayPayment"> </div>
           {paymentRendered && (
-            <button onClick={handleGetPayToken}  disabled={isClicked}>{isClicked?"付款中":"付款"}</button>
+            <button onClick={handleGetPayToken} disabled={isClicked}>
+              {isClicked ? "付款中" : "付款"}
+            </button>
           )}
-         
         </div>
       ) : (
         <p>正在載入支付 SDK...</p>

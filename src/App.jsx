@@ -1,7 +1,10 @@
-import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {useState} from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import { useState } from "react";
 import Input from "./Pages/Input";
 import Payment from "./Pages/Payment";
+import OrderResultURL from "./Pages/OrderResultURL";
+import PaymentInfoPage from "./Pages/PaymentInfoPage";
 
 export default function App() {
   function getCurrentTime() {
@@ -15,20 +18,24 @@ export default function App() {
     const milliseconds = String(now.getMilliseconds()).padStart(3, "0");
     const time = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
     const string = `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
-    return {time, string};
+    return { time, string };
   }
-
 
   const [MerchantID, setMerchantID] = useState("3002607");
   const [Token, setToken] = useState("");
- const [Language, setLanguage] = useState(ECPay.Language.zhTW);//ECPay.Language.enUS
+  const [Language, setLanguage] = useState(ECPay.Language.zhTW); //ECPay.Language.enUS
   const [ServerType, setServerType] = useState("Stage");
   const [IsLoading, setIsLoading] = useState(1);
   const [Version, setVersion] = useState("V2");
-  const [MerchantTradeNo, setMerchantTradeNo] = useState(`emb${getCurrentTime().string}`);
-  const [MerchantTradeDate,setMerchantTradeDate] = useState(getCurrentTime().time);
+  const [MerchantTradeNo, setMerchantTradeNo] = useState(
+    `emb${getCurrentTime().string}`
+  );
+  const [MerchantTradeDate, setMerchantTradeDate] = useState(
+    getCurrentTime().time
+  );
+  const [PaymentInfo,setPaymentInfo]=useState()
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
         <Route
           path="/"
@@ -39,7 +46,6 @@ export default function App() {
               setMerchantID={setMerchantID}
               MerchantTradeNo={MerchantTradeNo}
               MerchantTradeDate={MerchantTradeDate}
-             
             />
           }
         />
@@ -48,17 +54,21 @@ export default function App() {
           element={
             <Payment
               MerchantID={MerchantID}
-              setMerchantID={setMerchantID}
+              MerchantTradeNo={MerchantTradeNo}
+              setPaymentInfo={setPaymentInfo}
               Token={Token}
               Language={Language}
               ServerType={ServerType}
               IsLoading={IsLoading}
               Version={Version}
-              MerchantTradeNo={MerchantTradeNo}
+              
             />
           }
         />
+        <Route path="/OrderResultURL" element={<OrderResultURL />} />
+        <Route path="/PaymentInfoPage" element={<PaymentInfoPage  />} />
+        
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }

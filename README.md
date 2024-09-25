@@ -14,6 +14,7 @@ https://github.com/evojroan/ecpay_embedded_checkout_backend
 - [ ] 5. ReturnURL
 - [ ] 6. OrderResultURL
 - [ ] 7. 於前端切換語言
+- [X] 8. Input.jsx 按鈕不可重複按
 
 ## 待優化功能
 - [ ] 1. 所有頁面如果有 error，要於前端顯示，不要只顯示於 console.log
