@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import axios from "axios"; // npm i axios
-import { useNavigate } from "react-router-dom"; //   npm install react-router-dom
+import {useNavigate} from "react-router-dom"; //   npm install react-router-dom
 
 export default function Payment({
   MerchantID,
@@ -10,7 +10,7 @@ export default function Payment({
   Language,
   ServerType,
   IsLoading,
-  Version,
+  Version
 }) {
   const navigate = useNavigate();
   const [paymentRendered, setPaymentRendered] = useState(false);
@@ -22,13 +22,13 @@ export default function Payment({
     PlatformID: "",
     MerchantID: MerchantID,
     PayToken: PayToken,
-    MerchantTradeNo: MerchantTradeNo,
+    MerchantTradeNo: MerchantTradeNo
   };
 
   const CreatePaymentPayload = {
     MerchantID: MerchantID,
-    RqHeader: { Timestamp: Timestamp },
-    Data: Data,
+    RqHeader: {Timestamp: Timestamp},
+    Data: Data
   };
 
   const [sdkLoaded, setSdkLoaded] = useState(false);
@@ -93,8 +93,8 @@ export default function Payment({
         setThreeDURL(JSON.stringify(response.data.ThreeDInfo.ThreeDURL));
       } else {
         setPaymentInfo(response.data);
-         console.log(" Payment.jsx拿到：",response.data)
-        
+        console.log(" Payment.jsx拿到：", response.data);
+        setPaymentInfo(response.data);
         navigate("/PaymentInfoPage");
       }
 
@@ -123,7 +123,9 @@ export default function Payment({
         <div id="PaymentComponent">
           <div id="ECPayPayment"> </div>
           {paymentRendered && (
-            <button onClick={handleGetPayToken} disabled={isClicked}>
+            <button
+              onClick={handleGetPayToken}
+              disabled={isClicked}>
               {isClicked ? "付款中" : "付款"}
             </button>
           )}
