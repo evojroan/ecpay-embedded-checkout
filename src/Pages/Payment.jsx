@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios"; // npm i axios
-import {useNavigate} from "react-router-dom"; //   npm install react-router-dom
+import { useNavigate } from "react-router-dom"; //   npm install react-router-dom
 
 export default function Payment({
   MerchantID,
@@ -10,25 +10,26 @@ export default function Payment({
   Language,
   ServerType,
   IsLoading,
-  Version
+  Version,
 }) {
   const navigate = useNavigate();
   const [paymentRendered, setPaymentRendered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [PayToken, setPayToken] = useState("");
   const [ThreeDURL, setThreeDURL] = useState("");
+  const [UnionPayURL, setUnionPayURL] = useState("");
   const Timestamp = Math.floor(Date.now() / 1000);
   const Data = {
     PlatformID: "",
     MerchantID: MerchantID,
     PayToken: PayToken,
-    MerchantTradeNo: MerchantTradeNo
+    MerchantTradeNo: MerchantTradeNo,
   };
 
   const CreatePaymentPayload = {
     MerchantID: MerchantID,
-    RqHeader: {Timestamp: Timestamp},
-    Data: Data
+    RqHeader: { Timestamp: Timestamp },
+    Data: Data,
   };
 
   const [sdkLoaded, setSdkLoaded] = useState(false);
@@ -78,8 +79,10 @@ export default function Payment({
   useEffect(() => {
     if (ThreeDURL) {
       window.location.href = ThreeDURL.replace(/^"|"$/g, "");
+    } else if (UnionPayURL) {
+      window.location.href = UnionPayURL.replace(/^"|"$/g, "");
     }
-  }, [ThreeDURL]);
+  }, [ThreeDURL,UnionPayURL]);
 
   //取得 Paytoken 後，立即以 CreatePaymentPayload 呼叫後端
   async function handleCreatePayment() {
@@ -90,10 +93,10 @@ export default function Payment({
       );
 
       if (response.data.ThreeDInfo.ThreeDURL) {
-        setThreeDURL(JSON.stringify(response.data.ThreeDInfo.ThreeDURL));
+        setThreeDURL(response.data.ThreeDInfo.ThreeDURL);
+      } else if (response.data.UnionPayInfo.UnionPayURL) {
+        setUnionPayURL(response.data.UnionPayInfo.UnionPayURL);
       } else {
-        setPaymentInfo(response.data);
-        console.log(" Payment.jsx拿到：", response.data);
         setPaymentInfo(response.data);
         navigate("/PaymentInfoPage");
       }
@@ -123,9 +126,7 @@ export default function Payment({
         <div id="PaymentComponent">
           <div id="ECPayPayment"> </div>
           {paymentRendered && (
-            <button
-              onClick={handleGetPayToken}
-              disabled={isClicked}>
+            <button onClick={handleGetPayToken} disabled={isClicked}>
               {isClicked ? "付款中" : "付款"}
             </button>
           )}
