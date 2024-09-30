@@ -6,8 +6,9 @@ import {useNavigate} from "react-router-dom"; //   npm install react-router-dom
 export default function Input({
   setToken,
   MerchantID,
-  setMerchantID,
-  MerchantTradeNo,
+  getCurrentTime,
+ setMerchantTradeNo,
+
   MerchantTradeDate
 }) {
   //
@@ -26,8 +27,8 @@ export default function Input({
   const PaymentUIType = 2;
   const ChoosePaymentList = 0;
   const ReturnURL = "https://www.ecpay.com.tw/";
-
-  const OrderResultURL = "http://localhost:5173/OrderResultURL";
+  const latestMerchantTradeNo=`emb${getCurrentTime().string}`;
+  const OrderResultURL = "https://www.ecpay.com.tw/";
   const TradeDesc = "站內付 2.0 範例";
   const ItemName = "測試商品";
   const CreditInstallment = "3,6,12,18,24";
@@ -41,7 +42,7 @@ export default function Input({
     ChoosePaymentList: ChoosePaymentList,
     OrderInfo: {
       MerchantTradeDate: MerchantTradeDate,
-      MerchantTradeNo: MerchantTradeNo,
+      MerchantTradeNo: latestMerchantTradeNo,///////////////////
       TotalAmount: TotalAmount,
       TradeDesc: TradeDesc,
       ItemName: ItemName,
@@ -74,15 +75,21 @@ export default function Input({
     Data: Data
   };
 
+  
+
   async function handleSubmit() {
+    setMerchantTradeNo(latestMerchantTradeNo)
     setIsClicked(true);
     try {
-      const response = await axios.post(
-        "https://ecpay-embedded-checkout-backend.vercel.app/GetTokenbyTrade",
 
+      console.log("GetTokenbyTradePayload=",GetTokenByTradePayload)
+      const response = await axios.post(
+        // "https://ecpay-embedded-checkout-backend.vercel.app/GetTokenbyTrade",
+"http://localhost:3000/GetTokenbyTrade",
         GetTokenByTradePayload
       );
-
+      console.log("送出的MerchantTradeNo=",Data.OrderInfo.MerchantTradeNo)
+     
       setToken(response.data);
       navigate("/payment");
     } catch (error) {
@@ -94,29 +101,7 @@ export default function Input({
     <>
       <div className="paramsInput">
         <div className="purchase-info">
-          <h2>請選擇帳號</h2>
-          <form>
-            <label className="hover_radio">
-              <input
-                type="radio"
-                name="MerchantID"
-                value="3002607"
-                checked={MerchantID === "3002607"}
-                onChange={() => setMerchantID("3002607")}
-              />
-              3002607(特店測試資料)
-            </label>
-            <label className="hover_radio">
-              <input
-                type="radio"
-                name="MerchantID"
-                value="3003008"
-                checked={MerchantID === "3003008"}
-                onChange={() => setMerchantID("3003008")}
-              />
-              3003008(平台商測試資料)
-            </label>
-          </form>
+         
           <h2>請輸入購買數量</h2>
           <p>價格：{price}元/份</p>
           <p>

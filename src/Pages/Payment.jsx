@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"; //   npm install react-router-do
 export default function Payment({
   MerchantID,
   MerchantTradeNo,
+  setMerchantTradeNo,
   setPaymentInfo,
   Token,
   Language,
@@ -13,6 +14,7 @@ export default function Payment({
   Version,
 }) {
   const navigate = useNavigate();
+ 
   const [paymentRendered, setPaymentRendered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [PayToken, setPayToken] = useState("");
@@ -51,6 +53,7 @@ export default function Payment({
         if (errMsg) {
           console.error(errMsg);
         } else {
+        
           ECPay.createPayment(
             Token,
             Language,
@@ -66,6 +69,8 @@ export default function Payment({
         }
       });
     }
+
+   
   }, [sdkLoaded, Token, Language, ServerType, IsLoading, Version]);
 
   //等待取得 Paytoken
@@ -88,15 +93,20 @@ export default function Payment({
   async function handleCreatePayment() {
     try {
       const response = await axios.post(
-        "https://ecpay-embedded-checkout-backend.vercel.app/CreatePayment",
+       // "https://ecpay-embedded-checkout-backend.vercel.app/CreatePayment",
+       "http://localhost:3000/CreatePayment",
         CreatePaymentPayload
       );
+
+      console.log("Resonse Data=",response.data)
+    
 
       if (response.data.ThreeDInfo.ThreeDURL) {
         setThreeDURL(response.data.ThreeDInfo.ThreeDURL);
       } else if (response.data.UnionPayInfo.UnionPayURL) {
         setUnionPayURL(response.data.UnionPayInfo.UnionPayURL);
       } else {
+      
         setPaymentInfo(response.data);
         navigate("/PaymentInfoPage");
       }

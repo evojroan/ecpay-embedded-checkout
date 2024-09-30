@@ -28,9 +28,7 @@ export default function App() {
   const [IsLoading, setIsLoading] = useState(1);
   const [Version, setVersion] = useState("V2");
   const [PaymentInfo, setPaymentInfo] = useState("");
-  const [MerchantTradeNo, setMerchantTradeNo] = useState(
-    `emb${getCurrentTime().string}`
-  );
+  const [MerchantTradeNo, setMerchantTradeNo] = useState("");
   const [MerchantTradeDate, setMerchantTradeDate] = useState(
     getCurrentTime().time
   );
@@ -45,7 +43,9 @@ export default function App() {
               setToken={setToken}
               MerchantID={MerchantID}
               setMerchantID={setMerchantID}
-              MerchantTradeNo={MerchantTradeNo}
+              getCurrentTime={getCurrentTime}
+            
+              setMerchantTradeNo={setMerchantTradeNo}
               MerchantTradeDate={MerchantTradeDate}
             />
           }
@@ -55,6 +55,7 @@ export default function App() {
           element={
             <Payment
               MerchantID={MerchantID}
+              setMerchantTradeNo={setMerchantTradeNo}
               MerchantTradeNo={MerchantTradeNo}
               setPaymentInfo={setPaymentInfo}
               Token={Token}
