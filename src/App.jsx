@@ -29,9 +29,7 @@ export default function App() {
   const [Version, setVersion] = useState("V2");
   const [PaymentInfo, setPaymentInfo] = useState("");
   const [MerchantTradeNo, setMerchantTradeNo] = useState("");
-  const [MerchantTradeDate, setMerchantTradeDate] = useState(
-    getCurrentTime().time
-  );
+  
 
   return (
     <Router>
@@ -44,9 +42,8 @@ export default function App() {
               MerchantID={MerchantID}
               setMerchantID={setMerchantID}
               getCurrentTime={getCurrentTime}
-            
               setMerchantTradeNo={setMerchantTradeNo}
-              MerchantTradeDate={MerchantTradeDate}
+           
             />
           }
         />

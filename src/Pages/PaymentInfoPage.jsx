@@ -1,9 +1,13 @@
-import { Link } from "react-router-dom";
+
 import Barcode from "react-barcode"; //npm i react-barcode
+import { useNavigate } from "react-router-dom"; //   npm install react-router-dom
 
 let bankname;
 
+
 export default function PaymentInfoPage({ PaymentInfo }) {
+  const navigate = useNavigate();
+
   switch (PaymentInfo.ATMInfo.BankCode) {
     case "":
       bankname = "非 ATM 匯款";
@@ -110,9 +114,9 @@ export default function PaymentInfoPage({ PaymentInfo }) {
         : ""}
       <br />
       {/* <Link to="https://ecpay-embedded-checkout-git-main-evojroans-projects.vercel.app/"> */}
-      <Link to="/">
+      <u onClick={()=>{navigate('/')}}>
         回首頁
-      </Link>
+      </u>
     </>
   );
 }

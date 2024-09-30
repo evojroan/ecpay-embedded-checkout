@@ -1,17 +1,15 @@
-import {useState} from "react";
+import { useState} from "react";
 import "../App.css";
 import axios from "axios"; // npm i axios
-import {useNavigate} from "react-router-dom"; //   npm install react-router-dom
+import { useNavigate } from "react-router-dom"; //   npm install react-router-dom
 
 export default function Input({
   setToken,
   MerchantID,
   getCurrentTime,
- setMerchantTradeNo,
-
-  MerchantTradeDate
+  setMerchantTradeNo,  
 }) {
-  //
+  
   const navigate = useNavigate();
   const Timestamp = Math.floor(Date.now() / 1000);
   const MerchantMemberID = "member3002607";
@@ -27,7 +25,8 @@ export default function Input({
   const PaymentUIType = 2;
   const ChoosePaymentList = 0;
   const ReturnURL = "https://www.ecpay.com.tw/";
-  const latestMerchantTradeNo=`emb${getCurrentTime().string}`;
+  const latestMerchantTradeNo = `emb${getCurrentTime().string}`;
+  const MerchantTradeDate = `${getCurrentTime().time}`;
   const OrderResultURL = "https://www.ecpay.com.tw/";
   const TradeDesc = "站內付 2.0 範例";
   const ItemName = "測試商品";
@@ -42,54 +41,54 @@ export default function Input({
     ChoosePaymentList: ChoosePaymentList,
     OrderInfo: {
       MerchantTradeDate: MerchantTradeDate,
-      MerchantTradeNo: latestMerchantTradeNo,///////////////////
+      MerchantTradeNo: latestMerchantTradeNo,
       TotalAmount: TotalAmount,
       TradeDesc: TradeDesc,
       ItemName: ItemName,
-      ReturnURL: ReturnURL
+      ReturnURL: ReturnURL,
     },
     CardInfo: {
       OrderResultURL: OrderResultURL,
-      CreditInstallment: CreditInstallment
+      CreditInstallment: CreditInstallment,
     },
-    UnionPayInfo: {OrderResultURL: OrderResultURL},
+    UnionPayInfo: { OrderResultURL: OrderResultURL },
     ATMInfo: {
-      ExpireDate: ExpireDate
+      ExpireDate: ExpireDate,
     },
     CVSInfo: {
-      StoreExpireDate: StoreExpireDate_CVS
+      StoreExpireDate: StoreExpireDate_CVS,
     },
     BARCODEInfo: {
-      StoreExpireDate: StoreExpireDate_BARCODE
+      StoreExpireDate: StoreExpireDate_BARCODE,
     },
     ConsumerInfo: {
       MerchantMemberID: MerchantMemberID,
       Name: Name,
       Phone: Phone,
-      Email: Email
-    }
+      Email: Email,
+    },
   };
   const GetTokenByTradePayload = {
     MerchantID: MerchantID,
-    RqHeader: {Timestamp: Timestamp},
-    Data: Data
+    RqHeader: { Timestamp: Timestamp },
+    Data: Data,
   };
 
   
 
+
   async function handleSubmit() {
-    setMerchantTradeNo(latestMerchantTradeNo)
+    setMerchantTradeNo(latestMerchantTradeNo);
     setIsClicked(true);
     try {
-
-      console.log("GetTokenbyTradePayload=",GetTokenByTradePayload)
+      console.log("GetTokenbyTradePayload=", GetTokenByTradePayload);
       const response = await axios.post(
         // "https://ecpay-embedded-checkout-backend.vercel.app/GetTokenbyTrade",
-"http://localhost:3000/GetTokenbyTrade",
+        "http://localhost:3000/GetTokenbyTrade",
         GetTokenByTradePayload
       );
-      console.log("送出的MerchantTradeNo=",Data.OrderInfo.MerchantTradeNo)
-     
+      console.log("送出的MerchantTradeNo=", Data.OrderInfo.MerchantTradeNo);
+
       setToken(response.data);
       navigate("/payment");
     } catch (error) {
@@ -101,7 +100,6 @@ export default function Input({
     <>
       <div className="paramsInput">
         <div className="purchase-info">
-         
           <h2>請輸入購買數量</h2>
           <p>價格：{price}元/份</p>
           <p>
@@ -111,7 +109,7 @@ export default function Input({
               type="number"
               min="1"
               max="100"
-              onChange={e => {
+              onChange={(e) => {
                 const newUnit = Math.min(
                   100,
                   Math.max(1, parseInt(e.target.value) || 1)
@@ -132,7 +130,7 @@ export default function Input({
               id="Name"
               type="text"
               maxLength="50"
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               value={Name}
             />
           </p>
@@ -142,7 +140,7 @@ export default function Input({
               id="Phone"
               type="tel"
               maxLength="60"
-              onChange={e => {
+              onChange={(e) => {
                 const inputValue = e.target.value.replace(/\D/g, "");
                 setPhone(inputValue);
               }}
@@ -155,7 +153,7 @@ export default function Input({
               id="Email"
               type="email"
               maxLength="30"
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               value={Email}
             />
           </p>
@@ -184,16 +182,12 @@ export default function Input({
             </label>
           </form>
         </div>
-        <button
-          onClick={handleSubmit}
-          disabled={isClicked}>
+        <button onClick={handleSubmit} disabled={isClicked}>
           {isClicked ? "送出中" : "送出"}
         </button>
       </div>
 
-      <div
-        id="ECPayPayment"
-        className="PaymentUI"></div>
+      <div id="ECPayPayment" className="PaymentUI"></div>
     </>
   );
 }

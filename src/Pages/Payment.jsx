@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios"; // npm i axios
 import { useNavigate } from "react-router-dom"; //   npm install react-router-dom
 
 export default function Payment({
   MerchantID,
   MerchantTradeNo,
-  setMerchantTradeNo,
   setPaymentInfo,
   Token,
   Language,
@@ -14,7 +13,7 @@ export default function Payment({
   Version,
 }) {
   const navigate = useNavigate();
- 
+
   const [paymentRendered, setPaymentRendered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [PayToken, setPayToken] = useState("");
@@ -35,6 +34,8 @@ export default function Payment({
   };
 
   const [sdkLoaded, setSdkLoaded] = useState(false);
+
+
 
   useEffect(() => {
     const checkSDKLoaded = setInterval(() => {
@@ -69,7 +70,6 @@ export default function Payment({
         }
       });
     }
-
    
   }, [sdkLoaded, Token, Language, ServerType, IsLoading, Version]);
 
