@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import Barcode from 'react-barcode'; //npm i react-barcode
 
 let bankname;
 
@@ -89,7 +90,7 @@ export default function PaymentInfoPage({PaymentInfo}) {
         : payMethod === "CVS"
         ? paymentObj[payMethod].PaymentNo
         : payMethod === "BARCODE"
-        ? JSON.stringify(paymentObj[payMethod].PaymentNo)
+        ? <><Barcode value={paymentObj[payMethod].PaymentNo.第一段條碼}/><Barcode value={paymentObj[payMethod].PaymentNo.第二段條碼}/><Barcode value={paymentObj[payMethod].PaymentNo.第三段條碼}/></>
         : ""}
       <br />
       {payMethod === "ATM"
@@ -100,7 +101,8 @@ export default function PaymentInfoPage({PaymentInfo}) {
         ? paymentObj[payMethod].ExpireDate
         : ""}
       <br />
-      <Link to="/">回首頁</Link>
+      
+      <Link to="https://ecpay-embedded-checkout-git-main-evojroans-projects.vercel.app/">回首頁</Link>
     </>
   );
 }
