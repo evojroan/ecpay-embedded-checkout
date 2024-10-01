@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios"; // npm i axios
-import { useNavigate } from "react-router-dom"; //   npm install react-router-dom
+import { useNavigate } from "react-router-dom"; //   npm i react-router-dom
+
 
 export default function Payment({
   MerchantID,
@@ -33,45 +34,46 @@ export default function Payment({
     Data: Data,
   };
 
-  const [sdkLoaded, setSdkLoaded] = useState(false);
-
-
-
   useEffect(() => {
-    const checkSDKLoaded = setInterval(() => {
-      if (window.ECPay) {
-        clearInterval(checkSDKLoaded);
-        setSdkLoaded(true);
-      }
-    }, 100);
-
-    return () => clearInterval(checkSDKLoaded);
-  }, []);
-
-  useEffect(() => {
-    if (sdkLoaded) {
-      ECPay.initialize(ServerType, IsLoading, function (errMsg) {
-        if (errMsg) {
-          console.error(errMsg);
-        } else {
-        
-          ECPay.createPayment(
-            Token,
-            Language,
-            function (errMsg) {
-              if (errMsg) {
-                console.error(errMsg);
-              } else {
-                setPaymentRendered(true);
-              }
-            },
-            Version
-          );
-        }
-      });
-    }
+    
    
-  }, [sdkLoaded, Token, Language, ServerType, IsLoading, Version]);
+      if (!window.ECPayInitialized) {
+        window.ECPay.initialize(ServerType, IsLoading, function (errMsg) {
+          if (errMsg) {
+            console.error(errMsg);
+          } else {
+            window.ECPay.createPayment(
+              Token,
+              Language,
+              function (errMsg) {
+                if (errMsg) {
+                  console.error(errMsg);
+                } else {
+                  setPaymentRendered(true);
+                  window.ECPayInitialized = true; // 標記為已初始化
+                }
+              },
+              Version
+            );
+          }
+        });
+      } else {
+        // 如果已經初始化，直接呼叫 createPayment
+        window.ECPay.createPayment(
+          Token,
+          Language,
+          function (errMsg) {
+            if (errMsg) {
+              console.error(errMsg);
+            } else {
+              setPaymentRendered(true);
+            }
+          },
+          Version
+        );
+      }
+   
+  }, [Token, Language, ServerType, IsLoading, Version]);
 
   //等待取得 Paytoken
   useEffect(() => {
@@ -132,7 +134,10 @@ export default function Payment({
   return (
     <div>
       <h2>綠界站內付 2.0 付款畫面</h2>
-      {sdkLoaded ? (
+
+
+
+
         <div id="PaymentComponent">
           <div id="ECPayPayment"> </div>
           {paymentRendered && (
@@ -141,9 +146,8 @@ export default function Payment({
             </button>
           )}
         </div>
-      ) : (
-        <p>正在載入支付 SDK...</p>
-      )}
+   
+      
     </div>
   );
 }

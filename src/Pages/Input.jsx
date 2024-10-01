@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState, useEffect} from "react";
 import "../App.css";
 import axios from "axios"; // npm i axios
 import { useNavigate } from "react-router-dom"; //   npm install react-router-dom
@@ -74,20 +74,20 @@ export default function Input({
     Data: Data,
   };
 
-  
+
 
 
   async function handleSubmit() {
     setMerchantTradeNo(latestMerchantTradeNo);
     setIsClicked(true);
     try {
-      console.log("GetTokenbyTradePayload=", GetTokenByTradePayload);
+     
       const response = await axios.post(
         // "https://ecpay-embedded-checkout-backend.vercel.app/GetTokenbyTrade",
         "http://localhost:3000/GetTokenbyTrade",
         GetTokenByTradePayload
       );
-      console.log("送出的MerchantTradeNo=", Data.OrderInfo.MerchantTradeNo);
+  
 
       setToken(response.data);
       navigate("/payment");
