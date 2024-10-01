@@ -14,7 +14,7 @@ https://github.com/evojroan/ecpay_embedded_checkout_backend
 - [ ] 4. ApplePay 付款方式
 - [ ] 5. ReturnURL
 - [ ] 6. OrderResultURL
-- [ ] 7. Input.jsx 按鈕不可重複按
+- [X] 7. Input.jsx 按鈕不可重複按
 
 ## 待優化功能
 

@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import axios from "axios"; // npm i axios
 import { useNavigate } from "react-router-dom"; //   npm i react-router-dom
 
-
 export default function Payment({
   MerchantID,
   MerchantTradeNo,
@@ -35,44 +34,42 @@ export default function Payment({
   };
 
   useEffect(() => {
-    
-   
-      if (!window.ECPayInitialized) {
-        window.ECPay.initialize(ServerType, IsLoading, function (errMsg) {
+    console.log("TOKEN", Token);
+    if (!window.ECPayInitialized) {
+      window.ECPay.initialize(ServerType, IsLoading, function (errMsg) {
+        if (errMsg) {
+          console.error(errMsg);
+        } else {
+          window.ECPay.createPayment(
+            Token,
+            Language,
+            function (errMsg) {
+              if (errMsg) {
+                console.error(errMsg);
+              } else {
+                setPaymentRendered(true);
+                window.ECPayInitialized = true; // 標記為已初始化
+              }
+            },
+            Version
+          );
+        }
+      });
+    } else {
+      // 如果已經初始化，直接呼叫 createPayment
+      window.ECPay.createPayment(
+        Token,
+        Language,
+        function (errMsg) {
           if (errMsg) {
             console.error(errMsg);
           } else {
-            window.ECPay.createPayment(
-              Token,
-              Language,
-              function (errMsg) {
-                if (errMsg) {
-                  console.error(errMsg);
-                } else {
-                  setPaymentRendered(true);
-                  window.ECPayInitialized = true; // 標記為已初始化
-                }
-              },
-              Version
-            );
+            setPaymentRendered(true);
           }
-        });
-      } else {
-        // 如果已經初始化，直接呼叫 createPayment
-        window.ECPay.createPayment(
-          Token,
-          Language,
-          function (errMsg) {
-            if (errMsg) {
-              console.error(errMsg);
-            } else {
-              setPaymentRendered(true);
-            }
-          },
-          Version
-        );
-      }
-   
+        },
+        Version
+      );
+    }
   }, [Token, Language, ServerType, IsLoading, Version]);
 
   //等待取得 Paytoken
@@ -89,26 +86,21 @@ export default function Payment({
     } else if (UnionPayURL) {
       window.location.href = UnionPayURL.replace(/^"|"$/g, "");
     }
-  }, [ThreeDURL,UnionPayURL]);
+  }, [ThreeDURL, UnionPayURL]);
 
   //取得 Paytoken 後，立即以 CreatePaymentPayload 呼叫後端
   async function handleCreatePayment() {
     try {
       const response = await axios.post(
-       // "https://ecpay-embedded-checkout-backend.vercel.app/CreatePayment",
-       "http://localhost:3000/CreatePayment",
+        "https://ecpay-embedded-checkout-backend.vercel.app/CreatePayment",
+        //"http://localhost:3000/CreatePayment",
         CreatePaymentPayload
       );
-
-      console.log("Resonse Data=",response.data)
-    
-
       if (response.data.ThreeDInfo.ThreeDURL) {
         setThreeDURL(response.data.ThreeDInfo.ThreeDURL);
       } else if (response.data.UnionPayInfo.UnionPayURL) {
         setUnionPayURL(response.data.UnionPayInfo.UnionPayURL);
       } else {
-      
         setPaymentInfo(response.data);
         navigate("/PaymentInfoPage");
       }
@@ -135,19 +127,14 @@ export default function Payment({
     <div>
       <h2>綠界站內付 2.0 付款畫面</h2>
 
-
-
-
-        <div id="PaymentComponent">
-          <div id="ECPayPayment"> </div>
-          {paymentRendered && (
-            <button onClick={handleGetPayToken} disabled={isClicked}>
-              {isClicked ? "付款中" : "付款"}
-            </button>
-          )}
-        </div>
-   
-      
+      <div id="PaymentComponent">
+        <div id="ECPayPayment"> </div>
+        {paymentRendered && (
+          <button onClick={handleGetPayToken} disabled={isClicked}>
+            {isClicked ? "付款中" : "付款"}
+          </button>
+        )}
+      </div>
     </div>
   );
 }

@@ -83,14 +83,15 @@ export default function Input({
     try {
      
       const response = await axios.post(
-        // "https://ecpay-embedded-checkout-backend.vercel.app/GetTokenbyTrade",
-        "http://localhost:3000/GetTokenbyTrade",
+         "https://ecpay-embedded-checkout-backend.vercel.app/GetTokenbyTrade",
+        //"http://localhost:3000/GetTokenbyTrade",
         GetTokenByTradePayload
       );
-  
 
       setToken(response.data);
       navigate("/payment");
+
+      
     } catch (error) {
       console.error(error);
     }

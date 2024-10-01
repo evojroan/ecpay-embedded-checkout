@@ -113,10 +113,7 @@ export default function PaymentInfoPage({ PaymentInfo }) {
         ? paymentObj[payMethod].ExpireDate
         : ""}
       <br />
-      {/* <Link to="https://ecpay-embedded-checkout-git-main-evojroans-projects.vercel.app/"> */}
-      <u onClick={()=>{navigate('/')}}>
-        回首頁
-      </u>
+   <button onClick={()=>{navigate("/")}}>返回首頁</button>
     </>
   );
 }
