@@ -1,3 +1,4 @@
+//import {HashRouter as Router, Routes, Route} from "react-router-dom";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
 import {useState} from "react";
@@ -29,7 +30,7 @@ export default function App() {
   const [Version, setVersion] = useState("V2");
   const [PaymentInfo, setPaymentInfo] = useState("");
   const [MerchantTradeNo, setMerchantTradeNo] = useState("");
-  
+  const backendurl = "https://ecpay-embedded-checkout-backend.vercel.app/";
 
   return (
     <Router>
@@ -38,12 +39,12 @@ export default function App() {
           path="/"
           element={
             <Input
+              backendurl={backendurl}
               setToken={setToken}
               MerchantID={MerchantID}
               setMerchantID={setMerchantID}
               getCurrentTime={getCurrentTime}
               setMerchantTradeNo={setMerchantTradeNo}
-           
             />
           }
         />
@@ -51,6 +52,7 @@ export default function App() {
           path="/payment"
           element={
             <Payment
+              backendurl={backendurl}
               MerchantID={MerchantID}
               setMerchantTradeNo={setMerchantTradeNo}
               MerchantTradeNo={MerchantTradeNo}
@@ -65,7 +67,7 @@ export default function App() {
         />
         <Route
           path="/OrderResultURL"
-          element={<OrderResultURL />}
+          element={<OrderResultURL backendurl={backendurl} />}
         />
         <Route
           path="/PaymentInfoPage"

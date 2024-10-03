@@ -1,8 +1,9 @@
-import { useEffect, useState, useRef } from "react";
+import {useEffect, useState} from "react";
 import axios from "axios"; // npm i axios
-import { useNavigate } from "react-router-dom"; //   npm i react-router-dom
+import {useNavigate} from "react-router-dom"; //   npm i react-router-dom
 
 export default function Payment({
+  backendurl,
   MerchantID,
   MerchantTradeNo,
   setPaymentInfo,
@@ -10,7 +11,7 @@ export default function Payment({
   Language,
   ServerType,
   IsLoading,
-  Version,
+  Version
 }) {
   const navigate = useNavigate();
 
@@ -24,17 +25,16 @@ export default function Payment({
     PlatformID: "",
     MerchantID: MerchantID,
     PayToken: PayToken,
-    MerchantTradeNo: MerchantTradeNo,
+    MerchantTradeNo: MerchantTradeNo
   };
 
   const CreatePaymentPayload = {
     MerchantID: MerchantID,
-    RqHeader: { Timestamp: Timestamp },
-    Data: Data,
+    RqHeader: {Timestamp: Timestamp},
+    Data: Data
   };
 
   useEffect(() => {
-    console.log("TOKEN", Token);
     if (!window.ECPayInitialized) {
       window.ECPay.initialize(ServerType, IsLoading, function (errMsg) {
         if (errMsg) {
@@ -77,7 +77,7 @@ export default function Payment({
     if (PayToken) {
       handleCreatePayment();
     }
-  }, [PayToken]);
+  }, [PayToken]); //useCallback 尚待解決
 
   //等待取得 ThreeDURL
   useEffect(() => {
@@ -92,7 +92,7 @@ export default function Payment({
   async function handleCreatePayment() {
     try {
       const response = await axios.post(
-        "https://ecpay-embedded-checkout-backend.vercel.app/CreatePayment",
+        `${backendurl}/CreatePayment`,
         //"http://localhost:3000/CreatePayment",
         CreatePaymentPayload
       );
@@ -130,7 +130,9 @@ export default function Payment({
       <div id="PaymentComponent">
         <div id="ECPayPayment"> </div>
         {paymentRendered && (
-          <button onClick={handleGetPayToken} disabled={isClicked}>
+          <button
+            onClick={handleGetPayToken}
+            disabled={isClicked}>
             {isClicked ? "付款中" : "付款"}
           </button>
         )}

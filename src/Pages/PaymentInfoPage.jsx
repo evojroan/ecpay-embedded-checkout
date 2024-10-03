@@ -1,11 +1,9 @@
-
 import Barcode from "react-barcode"; //npm i react-barcode
-import { useNavigate } from "react-router-dom"; //   npm install react-router-dom
+import {useNavigate} from "react-router-dom"; //   npm install react-router-dom
 
 let bankname;
 
-
-export default function PaymentInfoPage({ PaymentInfo }) {
+export default function PaymentInfoPage({PaymentInfo}) {
   const navigate = useNavigate();
 
   switch (PaymentInfo.ATMInfo.BankCode) {
@@ -44,7 +42,7 @@ export default function PaymentInfoPage({ PaymentInfo }) {
       BankName: `付款銀行：${bankname}`,
       BankCode: `銀行代碼：${PaymentInfo.ATMInfo.BankCode}`,
       vAccount: `繳費帳號：${PaymentInfo.ATMInfo.vAccount}`,
-      ExpireDate: `繳費期限：${PaymentInfo.ATMInfo.ExpireDate} 23:59:59`,
+      ExpireDate: `繳費期限：${PaymentInfo.ATMInfo.ExpireDate} 23:59:59`
     },
     CVS: {
       PaymentType: "CVS",
@@ -52,7 +50,7 @@ export default function PaymentInfoPage({ PaymentInfo }) {
       CVSName: "付款超市：7-11、全家、萊爾富、OK 皆可",
       CVSCode: "繳費分店：任何分店皆可繳費",
       PaymentNo: `繳費代碼：${PaymentInfo.CVSInfo.PaymentNo}`,
-      ExpireDate: `繳費期限：${PaymentInfo.CVSInfo.ExpireDate}`,
+      ExpireDate: `繳費期限：${PaymentInfo.CVSInfo.ExpireDate}`
     },
     BARCODE: {
       PaymentType: "BARCODE",
@@ -62,10 +60,10 @@ export default function PaymentInfoPage({ PaymentInfo }) {
       PaymentNo: {
         第一段條碼: PaymentInfo.BarcodeInfo.Barcode1,
         第二段條碼: PaymentInfo.BarcodeInfo.Barcode2,
-        第三段條碼: PaymentInfo.BarcodeInfo.Barcode3,
+        第三段條碼: PaymentInfo.BarcodeInfo.Barcode3
       },
-      ExpireDate: `繳費期限：${PaymentInfo.BarcodeInfo.ExpireDate} 23:59:59`,
-    },
+      ExpireDate: `繳費期限：${PaymentInfo.BarcodeInfo.ExpireDate}`
+    }
   };
 
   return (
@@ -113,7 +111,12 @@ export default function PaymentInfoPage({ PaymentInfo }) {
         ? paymentObj[payMethod].ExpireDate
         : ""}
       <br />
-   <button onClick={()=>{navigate("/")}}>返回首頁</button>
+      <button
+        onClick={() => {
+          navigate("/");
+        }}>
+        返回首頁
+      </button>
     </>
   );
 }
