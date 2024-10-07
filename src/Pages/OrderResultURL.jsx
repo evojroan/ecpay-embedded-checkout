@@ -2,8 +2,8 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useLocation} from "react-router-dom";
 import {useNavigate} from "react-router-dom"; //   npm install react-router-dom
-const backendurl = "https://ecpay-embedded-checkout-backend.vercel.app";
-export default function OrderResultURL() {
+
+export default function OrderResultURL({backendurl}) {
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -16,7 +16,7 @@ export default function OrderResultURL() {
       try {
         // 向後端 API 請求付款結果
         const response = await axios.get(
-          // `http://localhost:3000/api/getOrderResult?MerchantTradeNo=${MerchantTradeNo}`
+       
           `${backendurl}/api/getOrderResult?MerchantTradeNo=${MerchantTradeNo}`
         );
         setOrderResult(response.data);

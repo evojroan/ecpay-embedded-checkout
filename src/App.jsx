@@ -31,6 +31,7 @@ export default function App() {
   const [PaymentInfo, setPaymentInfo] = useState("");
   const [MerchantTradeNo, setMerchantTradeNo] = useState("");
   const backendurl = "https://ecpay-embedded-checkout-backend.vercel.app";
+//const backendurl = "http://localhost:3000";
 
   return (
     <Router>

@@ -24,11 +24,11 @@ export default function Input ( {
   const price = 100;
   const PaymentUIType = 2;
   const ChoosePaymentList = 0;
-  const ReturnURL = "https://www.ecpay.com.tw/";
+  const ReturnURL = `${backendurl}/ReturnURL`;
+  const OrderResultURL = `${backendurl}/OrderResultURL`;
   const latestMerchantTradeNo = `emb${getCurrentTime().string}`;
   const MerchantTradeDate = `${getCurrentTime().time}`;
-   //const OrderResultURL = "http://localhost:5173/OrderResultURL";
-  const OrderResultURL = `${backendurl}/OrderResultURL`;
+
   const TradeDesc = "站內付 2.0 範例";
   const ItemName = "測試商品";
   const CreditInstallment = "3,6,12,18,24";
