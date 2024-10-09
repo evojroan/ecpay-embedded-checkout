@@ -19,7 +19,7 @@ https://github.com/evojroan/ecpay_embedded_checkout_backend
 - [x] 2. 付款方式選 BARCODE 回傳的付款資訊
 - [x] 3. 付款方式選 CVS 回傳的付款資訊
 - [ ] 4. ApplePay 付款方式
-- [ ] 5. ReturnURL
+- [x] 5. ReturnURL
 - [x] 6. OrderResultURL
 - [x] 7. Input.jsx 按鈕不可重複按
 - [ ] 8. Input 頁面可以切換語言

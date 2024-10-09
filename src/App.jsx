@@ -40,6 +40,8 @@ export default function App() {
           path="/"
           element={
             <Input
+            Language= {Language}
+            setLanguage= {setLanguage}
               backendurl={backendurl}
               setToken={setToken}
               MerchantID={MerchantID}
