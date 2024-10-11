@@ -77,6 +77,41 @@ export default function Input({
     Data: Data,
   };
 
+  const translations = {
+    [ECPay.Language.zhTW]: {
+      purchaseAmount: "請輸入購買數量",
+      price: "價格",
+      priceunit:" 元/份",
+      totalAmount: "總額",
+      ntd:" ",
+      purchaseInfo: "請輸入購買資訊",
+      name: "姓名",
+      phone: "電話",
+      email: "電子郵件",
+      rememberCard: "是否記憶信用卡卡號",
+      yes: "是",
+      no: "否",
+      submit: "送出",
+      submitting: "送出中"
+    },
+    [ECPay.Language.enUS]: {
+      purchaseAmount: "Purchase Amount",
+      price: "Price",
+      priceunit:" NTD/Piece",
+      totalAmount: "Total Amount ",
+      ntd:" NTD",
+      purchaseInfo: "Purchase Information",
+      name: "Name",
+      phone: "Phone",
+      email: "Email",
+      rememberCard: "Remember Credit Card Number",
+      yes: "Yes",
+      no: "No",
+      submit: "Submit",
+      submitting: "Submitting"
+    }
+  };
+
   async function handleSubmit() {
     setMerchantTradeNo(latestMerchantTradeNo);
     setIsClicked(true);
@@ -120,8 +155,8 @@ export default function Input({
           </form>
         
         <div className="purchase-info">
-          <h2>請輸入購買數量</h2>
-          <p>價格：{price}元/份</p>
+          <h2>{translations[Language].purchaseAmount}</h2>
+          <p>{translations[Language].price}：{price}{translations[Language].priceunit}</p>
           <p>
             <input
               value={Unit}
@@ -139,13 +174,13 @@ export default function Input({
               }}
             />
           </p>
-          總額：{TotalAmount}元
+          {translations[Language].totalAmount}：{TotalAmount}{translations[Language].ntd}
         </div>
 
         <div className="purchase-info">
-          <h2>請輸入購買資訊</h2>
+          <h2>{translations[Language].purchaseInfo}</h2>
           <p>
-            <label>姓名</label>
+            <label>{translations[Language].name}</label>
             <input
               id="Name"
               type="text"
@@ -155,7 +190,7 @@ export default function Input({
             />
           </p>
           <p>
-            <label>電話</label>
+            <label>{translations[Language].phone}</label>
             <input
               id="Phone"
               type="tel"
@@ -168,7 +203,7 @@ export default function Input({
             />
           </p>
           <p>
-            <label>電子郵件</label>
+            <label>{translations[Language].email}</label>
             <input
               id="Email"
               type="email"
@@ -178,7 +213,7 @@ export default function Input({
             />
           </p>
 
-          <div>是否記憶信用卡卡號</div>
+          <div>{translations[Language].rememberCard}</div>
           <form>
             <label className="hover_radio">
               <input
@@ -188,7 +223,7 @@ export default function Input({
                 checked={RememberCard === 1}
                 onChange={() => setRememberCard(1)}
               />
-              是
+              {translations[Language].yes}
             </label>
             <label className="hover_radio">
               <input
@@ -198,12 +233,12 @@ export default function Input({
                 checked={RememberCard === 0}
                 onChange={() => setRememberCard(0)}
               />
-              否
+              {translations[Language].no}
             </label>
           </form>
         </div>
         <button onClick={handleSubmit} disabled={isClicked}>
-          {isClicked ? "送出中" : "送出"}
+          {isClicked ? translations[Language].submitting:translations[Language].submit }
         </button>
       </div>
 

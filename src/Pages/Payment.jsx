@@ -34,6 +34,20 @@ export default function Payment({
     Data: Data
   };
 
+  const translations={
+    [ECPay.Language.zhTW]:{
+      pageTitle:"綠界站內付 2.0 付款畫面",
+      pay:"付款",
+      paying:"付款中"
+    },
+    [ECPay.Language.enUS]:{
+      pageTitle:"ECPay Embedded Checkout Page",
+      pay:"Pay",
+      paying:"Paying"
+    },
+  }
+
+  
   useEffect(() => {
     if (!window.ECPayInitialized) {
       window.ECPay.initialize(ServerType, IsLoading, function (errMsg) {
@@ -125,7 +139,7 @@ export default function Payment({
 
   return (
     <div>
-      <h2>綠界站內付 2.0 付款畫面</h2>
+      <h2>{translations[Language].pageTitle}</h2>
 
       <div id="PaymentComponent">
         <div id="ECPayPayment"> </div>
@@ -133,7 +147,7 @@ export default function Payment({
           <button
             onClick={handleGetPayToken}
             disabled={isClicked}>
-            {isClicked ? "付款中" : "付款"}
+            {isClicked ? translations[Language].paying : translations[Language].pay}
           </button>
         )}
       </div>

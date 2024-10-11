@@ -70,7 +70,7 @@ export default function App() {
         />
         <Route
           path="/OrderResultURL"
-          element={<OrderResultURL backendurl={backendurl} />}
+          element={<OrderResultURL backendurl={backendurl} Language={Language} />}
         />
         <Route
           path="/PaymentInfoPage"

@@ -22,7 +22,7 @@ https://github.com/evojroan/ecpay_embedded_checkout_backend
 - [x] 5. ReturnURL
 - [x] 6. OrderResultURL
 - [x] 7. Input.jsx 按鈕不可重複按
-- [ ] 8. Input 頁面可以切換語言
+- [x] 8. Input 頁面可以切換語言
 - [ ] 9. 所有頁面如果有 error，要於前端顯示，不要只顯示於 console.log
 
 ## 待解決問題
