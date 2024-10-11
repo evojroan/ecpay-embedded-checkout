@@ -13,7 +13,7 @@ export default function OrderResultURL({backendurl,Language}) {
   const MerchantTradeNo = searchParams.get("MerchantTradeNo");
   const [OrderResult, setOrderResult] = useState(null);
   const translations={
-    [ECPay.language.zhTW]:{
+    [Language]:{
       loading:"載入中...",
       result:"付款結果",
       merchanttradeno:"廠商訂單編號",
@@ -24,7 +24,7 @@ export default function OrderResultURL({backendurl,Language}) {
       tradefail:"交易未成功，請聯絡客服",
       back2index:"返回首頁"
     },
-    [ECPay.language.enUS]:{
+    [Language]:{
       loading:"Loading",
       result:"Payment Result",
       merchanttradeno:"MerchantTradeNo",
