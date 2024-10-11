@@ -2,6 +2,7 @@
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
 import {useState} from "react";
+import Index from "./Pages/Index";
 import Input from "./Pages/Input";
 import Payment from "./Pages/Payment";
 import OrderResultURL from "./Pages/OrderResultURL";
@@ -36,8 +37,9 @@ export default function App() {
   return (
     <Router>
       <Routes>
+        <Route path='/' element={<Index/>}/>
         <Route
-          path="/"
+          path="/Input"
           element={
             <Input
             Language= {Language}

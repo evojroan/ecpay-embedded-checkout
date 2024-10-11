@@ -40,5 +40,5 @@ useEffect(() => {
 
 ### 整理管理
 
-- [ ] 1. 用 Reducer 管理所有狀態
+- [ ] 1. 用 Redux 管理所有狀態
 - [ ] 2. 用 useContext 傳遞狀態
