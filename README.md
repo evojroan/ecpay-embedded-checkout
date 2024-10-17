@@ -18,12 +18,12 @@ https://github.com/evojroan/ecpay_embedded_checkout_backend
 - [x] 1. 付款方式選 ATM 回傳的付款資訊
 - [x] 2. 付款方式選 BARCODE 回傳的付款資訊
 - [x] 3. 付款方式選 CVS 回傳的付款資訊
-- [ ] 4. ApplePay 付款方式
-- [x] 5. ReturnURL
-- [x] 6. OrderResultURL
-- [x] 7. Input.jsx 按鈕不可重複按
-- [x] 8. Input 頁面可以切換語言
-- [ ] 9. 所有頁面如果有 error，要於前端顯示，不要只顯示於 console.log
+- [x] 4. ReturnURL
+- [x] 5. OrderResultURL
+- [x] 6. Input.jsx 按鈕不可重複按
+- [x] 7. Input 頁面可以切換語言
+- [ ] 8. 用 Redux 管理所有狀態
+- [ ] 9. 前端切版
 
 ## 待解決問題
 
@@ -38,7 +38,4 @@ useEffect(() => {
   }, [PayToken]);
 ```
 
-### 整理管理
 
-- [ ] 1. 用 Redux 管理所有狀態
-- [ ] 2. 用 useContext 傳遞狀態

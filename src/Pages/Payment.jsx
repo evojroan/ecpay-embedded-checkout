@@ -102,6 +102,8 @@ export default function Payment({
     }
   }, [ThreeDURL, UnionPayURL]);
 
+ 
+
   //取得 Paytoken 後，立即以 CreatePaymentPayload 呼叫後端
   async function handleCreatePayment() {
     try {
