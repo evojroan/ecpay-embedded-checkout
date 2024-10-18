@@ -7,7 +7,7 @@ import Input from "./Pages/Input";
 import Payment from "./Pages/Payment";
 import OrderResultURL from "./Pages/OrderResultURL";
 import PaymentInfoPage from "./Pages/PaymentInfoPage";
-import ApplePay from '../.well-known/apple-developer-merchantid-domain-association'
+import ApplePay from '../.well-known/apple-developer-merchantid-domain-association.zip'
 
 export default function App() {
   function getCurrentTime() {
