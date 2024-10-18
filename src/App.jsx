@@ -39,7 +39,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Index/>}/>
-        <Route path='/.well-known'><ApplePay/></Route>
+        <Route path='/.well-known' element={<ApplePay/>}/>
         <Route
           path="/Input"
           element={
