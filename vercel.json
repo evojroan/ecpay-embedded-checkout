@@ -2,6 +2,6 @@
   "rewrites": [
 
     { "source": "/(.*)", "destination": "/" },
-    { "src": "/.well-known/(.*)", "dest": "/public/.well-known/$1" }
+    { "source": "/.well-known/(.*)", "dest": "/public/.well-known/$1" }
   ]
 }
