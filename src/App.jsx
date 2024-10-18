@@ -7,7 +7,7 @@ import Input from "./Pages/Input";
 import Payment from "./Pages/Payment";
 import OrderResultURL from "./Pages/OrderResultURL";
 import PaymentInfoPage from "./Pages/PaymentInfoPage";
-import ApplePay from '../.well-known/apple-developer-merchantid-domain-association.zip'
+//import ApplePay from '../.well-known/apple-developer-merchantid-domain-association.zip'
 
 export default function App() {
   function getCurrentTime() {
@@ -39,7 +39,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Index/>}/>
-        <Route path='/.well-known' element={<ApplePay/>}/>
+        {/* <Route path='/.well-known' element={<ApplePay/>}/> */}
         <Route
           path="/Input"
           element={
