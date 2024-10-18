@@ -1,3 +1,17 @@
 {
-  "rewrites": [{"source": "/(.*)", "destination": "/"},  { "source": "/.well-known/(.*)", "destination": "/.well-known/$1" }]
+  "rewrites": [
+    { "source": "/.well-known/(.*)", "destination": "/.well-known/$1" },
+    { "source": "/(.*)", "destination": "/" }
+  ],
+  "headers": [
+    {
+      "source": "/.well-known/apple-developer-merchantid-domain-association",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/octet-stream"
+        }
+      ]
+    }
+  ]
 }
