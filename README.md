@@ -23,7 +23,7 @@ https://github.com/evojroan/ecpay_embedded_checkout_backend
 - [x] 6. Input.jsx 按鈕不可重複按
 - [x] 7. Input 頁面可以切換語言
 - [ ] 8. 用 Redux 管理所有狀態
-- [ ] 9. 前端切版
+- [ ] 9. 前端切版 TW
 
 ## 待解決問題
 

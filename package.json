@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-      "build": "vite build && cp -r .well-known dist/.well-known",
+      "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-     "postbuild": "cp -r .well-known ./dist/.well-known"
+    "preview": "vite preview"
+   
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
