@@ -125,30 +125,11 @@ export default function Payment({
     }
   }
 
-  //取得 Apple Pay 付款結果
-
-  function getApplePayResultData(resultData, errMsg) {
-  
-    setApplepayresult(JSON.stringify(resultData));
-   
-    alert(JSON.stringify(resultData))
-    if (resultData != null) {
-      console.error(errMsg);
-    }
-  }
 
   //SDK 取得 Paytoken
   function handleGetPayToken() {
 //如果是 Apple Pay
-function getApplePayResultData(resultData, errMsg) {
-  
-  setApplepayresult(JSON.stringify(resultData));
- 
-  alert(JSON.stringify(resultData))
-  if (resultData != null) {
-    console.error(errMsg);
-  }
-}
+
 
    
 //如果不是 Apple Pay
@@ -166,6 +147,19 @@ function getApplePayResultData(resultData, errMsg) {
        }
     });
   }
+
+
+    //取得 Apple Pay 付款結果
+    function getApplePayResultData(resultData, errMsg) {
+  
+      setApplepayresult(JSON.stringify(resultData));
+     
+      alert(JSON.stringify(resultData))
+      if (resultData != null) {
+        console.error(errMsg);
+      }
+    }
+  
 
   return (
     <div>
