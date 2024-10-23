@@ -150,7 +150,7 @@ export default function Payment({
     //     setIsClicked(true);
     //     setApplepayresult("非 Apple Pay"); ////////////////////
     //   }else{setApplepayresult("else選了 Apple Pay，沒有 paytoken")} 
-    // });
+    });
   }
 
   return (
