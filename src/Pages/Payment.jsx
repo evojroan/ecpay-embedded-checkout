@@ -150,15 +150,16 @@ export default function Payment({
 
 
     //取得 Apple Pay 付款結果
+
+    const scriptContent = `
     function getApplePayResultData(resultData, errMsg) {
-  
-      setApplepayresult(JSON.stringify(resultData));
-     
-      alert(JSON.stringify(resultData))
       if (resultData != null) {
+        alert(JSON.stringify(resultData));
+      } else {
         console.error(errMsg);
       }
     }
+  `;
   
 
   return (
@@ -177,6 +178,8 @@ export default function Payment({
       </div>
       <h1>Apple Pay Result</h1>
       {applepayresult}
+
+      <script dangerouslySetInnerHTML={{ __html: scriptContent }} />
     </div>
   );
 }
