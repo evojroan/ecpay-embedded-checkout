@@ -133,7 +133,8 @@ export default function Payment({
 //如果是 Apple Pay
     
 function getApplePayResultData(resultData, errMsg) {
-  setApplepayresult(JSON.stringify(resultData));
+  setApplepayresult("Apple pay");
+  //setApplepayresult(JSON.stringify(resultData));
   if (resultData != null) {
     console.error(errMsg);
   }
