@@ -132,22 +132,22 @@ export default function Payment({
   //SDK 取得 Paytoken
   function handleGetPayToken() {
 //如果是 Apple Pay
-
+function getApplePayResultData(resultData, errMsg) {
+  
+  setApplepayresult(JSON.stringify(resultData));
+ 
+  alert(JSON.stringify(resultData))
+  if (resultData != null) {
+    console.error(errMsg);
+  }
+}
 
    
 //如果不是 Apple Pay
     ECPay.getPayToken(function (paymentInfo, errMsg) {
 
-      function getApplePayResultData(resultData, errMsg) {
-  
-        setApplepayresult(JSON.stringify(resultData));
-       
-        alert(JSON.stringify(resultData))
-        if (resultData != null) {
-          console.error(errMsg);
-        }
-      }
-      
+ 
+
        if (errMsg) {
         console.error(errMsg);
          return;
