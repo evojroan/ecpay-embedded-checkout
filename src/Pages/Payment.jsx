@@ -133,12 +133,13 @@ export default function Payment({
 //如果是 Apple Pay
     
 function getApplePayResultData(resultData, errMsg) {
-  setApplepayresult("Apple pay");
-  //setApplepayresult(JSON.stringify(resultData));
+  
+  setApplepayresult(JSON.stringify(resultData));
   if (resultData != null) {
     console.error(errMsg);
   }
 }
+getApplePayResultData(resultData, errMsg)
    
 //如果不是 Apple Pay
     ECPay.getPayToken(function (paymentInfo, errMsg) {
