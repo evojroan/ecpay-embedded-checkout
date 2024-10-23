@@ -142,14 +142,13 @@ export default function Payment({
         return;
       }
      
-      setApplepayresult("沒有 paytoken")
 
       if (paymentInfo.PayToken) {
         setPayToken(paymentInfo.PayToken);
         setIsClicked(true);
         setApplepayresult("非 Apple Pay")////////////////////
       }  //(else 不會運作)//else{setApplepayresult("沒有 paytoken")} 
-     
+     if(paymentInfo.PaymentType=='7'){setApplepayresult("選了 Apple Pay，沒有 paytoken")}
     });
   }
 
