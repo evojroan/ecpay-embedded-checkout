@@ -126,47 +126,32 @@ export default function Payment({
   }
 
   //取得 Apple Pay 付款結果
+  function getApplePayResultData(resultData, errMsg) {
+  
+    setApplepayresult(JSON.stringify(resultData));
+    if (resultData != null) {
+      console.error(errMsg);
+    }
+  }
+
  
 
   //SDK 取得 Paytoken
   function handleGetPayToken() {
-    // 定義 getApplePayResultData 函數
-    function getApplePayResultData(resultData, errMsg) {
-      if (resultData != null) {
-        console.log("Apple Pay 結果:", resultData);
-        setApplepayresult(JSON.stringify(resultData));
-        
-        // 根據 RtnCode 處理不同情況
-        if (resultData.RtnCode === 1) {
-          console.log("Apple Pay 交易成功");
-          // 這裡可以添加成功後的處理邏輯
-        } else {
-          console.error("Apple Pay 交易失敗:", resultData.RtnMsg);
-          // 這裡可以添加失敗後的處理邏輯
-        }
-      } else if (errMsg) {
-        console.error("Apple Pay 錯誤:", errMsg);
-        setApplepayresult("Apple Pay 錯誤: " + errMsg);
-      }
-    }
-
-    // 檢查是否支援 Apple Pay
-    if (window.ECPay && typeof window.ECPay.getApplePayResultData === 'function') {
-      // 調用 ECPay SDK 的 getApplePayResultData 方法
-      window.ECPay.getApplePayResultData(getApplePayResultData);
-    } else {
-      // 如果不支援 Apple Pay，則使用其他支付方式
-      ECPay.getPayToken(function (paymentInfo, errMsg) {
-        if (errMsg) {
-          console.error(errMsg);
-          return;
-        }
-        if (paymentInfo.PayToken) {
-          setPayToken(paymentInfo.PayToken);
-          setIsClicked(true);
-        }
-      });
-    }
+//如果是 Apple Pay
+  
+   
+//如果不是 Apple Pay
+    ECPay.getPayToken(function (paymentInfo, errMsg) {
+       if (errMsg) {
+        console.error(errMsg);
+         return;
+       }
+       if (paymentInfo.PayToken) {
+         setPayToken(paymentInfo.PayToken);
+         setIsClicked(true);
+       }
+    });
   }
 
   return (
