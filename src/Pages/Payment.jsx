@@ -21,7 +21,7 @@ export default function Payment({
   const [ThreeDURL, setThreeDURL] = useState("");
   const [UnionPayURL, setUnionPayURL] = useState("");
   const Timestamp = Math.floor(Date.now() / 1000);
-  const [applepayresult,setApplepayresult]=useState("尚未選取付款方式")
+  const [applepayresult, setApplepayresult] = useState("尚未選取付款方式");
   const Data = {
     PlatformID: "",
     MerchantID: MerchantID,
@@ -49,7 +49,6 @@ export default function Payment({
   };
 
   useEffect(() => {
-
     if (!window.ECPayInitialized) {
       window.ECPay.initialize(ServerType, IsLoading, function (errMsg) {
         if (errMsg) {
@@ -136,19 +135,23 @@ export default function Payment({
 
   //SDK 取得 Paytoken
   function handleGetPayToken() {
+
+    setApplepayresult("選了 Apple Pay，沒有 paytoken");
+
     ECPay.getPayToken(function (paymentInfo, errMsg) {
       if (errMsg) {
         console.error(errMsg);
         return;
       }
-     
 
       if (paymentInfo.PayToken) {
         setPayToken(paymentInfo.PayToken);
         setIsClicked(true);
-        setApplepayresult("非 Apple Pay")////////////////////
-      }  //(else 不會運作)//else{setApplepayresult("沒有 paytoken")} 
-     if(paymentInfo.PaymentType=='7'){setApplepayresult("選了 Apple Pay，沒有 paytoken")}
+        setApplepayresult("非 Apple Pay"); ////////////////////
+      } //(else 不會運作)//else{setApplepayresult("沒有 paytoken")}
+      // if (paymentInfo.PaymentType == "7") {
+      //   setApplepayresult("選了 Apple Pay，沒有 paytoken");
+      // }
     });
   }
 
@@ -168,7 +171,6 @@ export default function Payment({
       </div>
       <h1>Apple Pay Result</h1>
       {applepayresult}
-
     </div>
   );
 }
