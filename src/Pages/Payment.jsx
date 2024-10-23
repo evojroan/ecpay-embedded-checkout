@@ -128,7 +128,7 @@ export default function Payment({
 
   //取得 Apple Pay 付款結果
   function getApplePayResultData(resultData, errMsg) {
-    setApplepayresult(JSON.stringify(resultData));
+    setApplepayresult("123");
     if (resultData != null) {
       console.error(errMsg);
     }
@@ -146,7 +146,8 @@ export default function Payment({
         setPayToken(paymentInfo.PayToken);
         setIsClicked(true);
       } else {
-        getApplePayResultData;
+        setApplepayresult("no paytoken")
+        // getApplePayResultData;
       }
     });
   }
