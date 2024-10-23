@@ -136,7 +136,8 @@ export default function Payment({
   //SDK 取得 Paytoken
   function handleGetPayToken() {
 //如果是 Apple Pay
-    getApplePayResultData(resultData, errMsg)
+    // getApplePayResultData(resultData, errMsg)
+    setApplepayresult("有執行")
 //如果不是 Apple Pay
     ECPay.getPayToken(function (paymentInfo, errMsg) {
        if (errMsg) {
