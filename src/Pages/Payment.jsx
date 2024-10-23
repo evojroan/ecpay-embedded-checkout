@@ -129,6 +129,7 @@ export default function Payment({
   function getApplePayResultData(resultData, errMsg) {
   
     setApplepayresult(JSON.stringify(resultData));
+    alert(resultData)
     if (resultData != null) {
       console.error(errMsg);
     }
