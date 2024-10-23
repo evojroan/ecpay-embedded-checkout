@@ -136,9 +136,8 @@ export default function Payment({
   //SDK 取得 Paytoken
   function handleGetPayToken() {
 
-    setApplepayresult("選了 Apple Pay，沒有 paytoken");
-
     ECPay.getPayToken(function (paymentInfo, errMsg) {
+      
       if (errMsg) {
         console.error(errMsg);
         return;
@@ -148,10 +147,7 @@ export default function Payment({
         setPayToken(paymentInfo.PayToken);
         setIsClicked(true);
         setApplepayresult("非 Apple Pay"); ////////////////////
-      } //(else 不會運作)//else{setApplepayresult("沒有 paytoken")}
-      // if (paymentInfo.PaymentType == "7") {
-      //   setApplepayresult("選了 Apple Pay，沒有 paytoken");
-      // }
+      }else{setApplepayresult("選了 Apple Pay，沒有 paytoken")} 
     });
   }
 
