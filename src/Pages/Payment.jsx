@@ -21,6 +21,7 @@ export default function Payment({
   const [ThreeDURL, setThreeDURL] = useState("");
   const [UnionPayURL, setUnionPayURL] = useState("");
   const Timestamp = Math.floor(Date.now() / 1000);
+  const [applepayresult,setApplepayresult]=useState("")
   const Data = {
     PlatformID: "",
     MerchantID: MerchantID,
@@ -127,7 +128,7 @@ export default function Payment({
 
   //取得 Apple Pay 付款結果
   function getApplePayResultData(resultData, errMsg) {
-    alert(JSON.stringify(resultData));
+    setApplepayresult(JSON.stringify(resultData));
     if (resultData != null) {
       console.error(errMsg);
     }
@@ -164,6 +165,9 @@ export default function Payment({
           </button>
         )}
       </div>
+      <h1>Apple Pay Result</h1>
+      {applepayresult}
+
     </div>
   );
 }
