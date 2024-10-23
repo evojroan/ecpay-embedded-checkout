@@ -141,15 +141,12 @@ export default function Payment({
         console.error(errMsg);
         return;
       }
-
+      setApplepayresult("no paytoken")//////////////////////////////////
       if (paymentInfo.PayToken) {
         setPayToken(paymentInfo.PayToken);
         setIsClicked(true);
         setApplepayresult("非 Apple Pay")////////////////////
-      } else if(!paymentInfo.PayToken) {
-        setApplepayresult("no paytoken")////////////////////
-        // getApplePayResultData;
-      }
+      } 
     });
   }
 
