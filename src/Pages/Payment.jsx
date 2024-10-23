@@ -145,8 +145,9 @@ export default function Payment({
       if (paymentInfo.PayToken) {
         setPayToken(paymentInfo.PayToken);
         setIsClicked(true);
+        setApplepayresult("非 Apple Pay")////////////////////
       } else {
-        setApplepayresult("no paytoken")
+        setApplepayresult("no paytoken")////////////////////
         // getApplePayResultData;
       }
     });
