@@ -21,7 +21,7 @@ export default function Payment({
   const [ThreeDURL, setThreeDURL] = useState("");
   const [UnionPayURL, setUnionPayURL] = useState("");
   const Timestamp = Math.floor(Date.now() / 1000);
-  const [applepayresult,setApplepayresult]=useState("")
+  const [applepayresult,setApplepayresult]=useState("尚未選取付款方式")
   const Data = {
     PlatformID: "",
     MerchantID: MerchantID,
@@ -146,7 +146,7 @@ export default function Payment({
         setPayToken(paymentInfo.PayToken);
         setIsClicked(true);
         setApplepayresult("非 Apple Pay")////////////////////
-      } else {
+      } else if(!paymentInfo.PayToken) {
         setApplepayresult("no paytoken")////////////////////
         // getApplePayResultData;
       }
