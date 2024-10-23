@@ -13,7 +13,7 @@ export default function OrderResultURL({backendurl,Language}) {
   const MerchantTradeNo = searchParams.get("MerchantTradeNo");
   const [OrderResult, setOrderResult] = useState(null);
   const translations={
-    [Language]:{
+    [ECPay.Language.zhTW]:{
       loading:"載入中...",
       result:"付款結果",
       merchanttradeno:"廠商訂單編號",
@@ -24,7 +24,7 @@ export default function OrderResultURL({backendurl,Language}) {
       tradefail:"交易未成功，請聯絡客服",
       back2index:"返回首頁"
     },
-    [Language]:{
+    [ECPay.Language.enUS]:{
       loading:"Loading",
       result:"Payment Result",
       merchanttradeno:"MerchantTradeNo",
@@ -32,12 +32,13 @@ export default function OrderResultURL({backendurl,Language}) {
       tradeamount:"Trade Amount",
       traderesult:"Trade Result",
       tradesuccess:"Trade Successful",
-      tradefail:"Trade Fails. Please contact customer service",
+      tradefail:"Trade Failed. Please contact customer service",
       back2index:"Back to Index"
     },
   }
 
   useEffect(() => {
+    console.log("language=",Language)
     const fetchPaymentResult = async () => {
       try {
         // 向後端 API 請求付款結果

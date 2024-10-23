@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios"; // npm i axios
-import {useNavigate} from "react-router-dom"; //   npm i react-router-dom
+import { useNavigate } from "react-router-dom"; //   npm i react-router-dom
 
 export default function Payment({
   backendurl,
@@ -11,7 +11,7 @@ export default function Payment({
   Language,
   ServerType,
   IsLoading,
-  Version
+  Version,
 }) {
   const navigate = useNavigate();
 
@@ -25,30 +25,30 @@ export default function Payment({
     PlatformID: "",
     MerchantID: MerchantID,
     PayToken: PayToken,
-    MerchantTradeNo: MerchantTradeNo
+    MerchantTradeNo: MerchantTradeNo,
   };
 
   const CreatePaymentPayload = {
     MerchantID: MerchantID,
-    RqHeader: {Timestamp: Timestamp},
-    Data: Data
+    RqHeader: { Timestamp: Timestamp },
+    Data: Data,
   };
 
-  const translations={
-    [ECPay.Language.zhTW]:{
-      pageTitle:"綠界站內付 2.0 付款畫面",
-      pay:"付款",
-      paying:"付款中"
+  const translations = {
+    [ECPay.Language.zhTW]: {
+      pageTitle: "綠界站內付 2.0 付款畫面",
+      pay: "付款",
+      paying: "付款中",
     },
-    [ECPay.Language.enUS]:{
-      pageTitle:"ECPay Embedded Checkout Page",
-      pay:"Pay",
-      paying:"Paying"
+    [ECPay.Language.enUS]: {
+      pageTitle: "ECPay Embedded Checkout Page",
+      pay: "Pay",
+      paying: "Paying",
     },
-  }
+  };
 
-  
   useEffect(() => {
+
     if (!window.ECPayInitialized) {
       window.ECPay.initialize(ServerType, IsLoading, function (errMsg) {
         if (errMsg) {
@@ -102,8 +102,6 @@ export default function Payment({
     }
   }, [ThreeDURL, UnionPayURL]);
 
- 
-
   //取得 Paytoken 後，立即以 CreatePaymentPayload 呼叫後端
   async function handleCreatePayment() {
     try {
@@ -127,6 +125,14 @@ export default function Payment({
     }
   }
 
+  //取得 Apple Pay 付款結果
+  function getApplePayResultData(resultData, errMsg) {
+    alert(JSON.stringify(resultData));
+    if (resultData != null) {
+      console.error(errMsg);
+    }
+  }
+
   //SDK 取得 Paytoken
   function handleGetPayToken() {
     ECPay.getPayToken(function (paymentInfo, errMsg) {
@@ -134,8 +140,13 @@ export default function Payment({
         console.error(errMsg);
         return;
       }
-      setPayToken(paymentInfo.PayToken);
-      setIsClicked(true);
+
+      if (paymentInfo.PayToken) {
+        setPayToken(paymentInfo.PayToken);
+        setIsClicked(true);
+      } else {
+        getApplePayResultData;
+      }
     });
   }
 
@@ -146,10 +157,10 @@ export default function Payment({
       <div id="PaymentComponent">
         <div id="ECPayPayment"> </div>
         {paymentRendered && (
-          <button
-            onClick={handleGetPayToken}
-            disabled={isClicked}>
-            {isClicked ? translations[Language].paying : translations[Language].pay}
+          <button onClick={handleGetPayToken} disabled={isClicked}>
+            {isClicked
+              ? translations[Language].paying
+              : translations[Language].pay}
           </button>
         )}
       </div>

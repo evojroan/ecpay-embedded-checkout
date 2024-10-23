@@ -23,8 +23,9 @@ https://github.com/evojroan/ecpay_embedded_checkout_backend
 - [x] 6. Input.jsx 按鈕不可重複按
 - [x] 7. Input 頁面可以切換語言
 - [ ] 8. 用 Redux 管理所有狀態
-- [ ] 9. 前端切版 TW
-- [ ] 10.Apple Pay
+- [x] 9. Apple Pay
+- [ ] 10. Apple Pay Result
+- [ ] 11. PaymentURL / OrderResultURL 語言未更新
 
 ## 待解決問題
 
