@@ -138,7 +138,7 @@ export default function Payment({
 
     ECPay.getPayToken(function (paymentInfo, errMsg) {
 
-      setApplepayresult("選了 Apple Pay，沒有 paytoken")
+      setApplepayresult(paymentInfo.PaymentType)
       
     //   if (errMsg) {
     //     console.error(errMsg);
