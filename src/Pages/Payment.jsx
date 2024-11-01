@@ -142,6 +142,7 @@ export default function Payment({
          return;
        }
        if (paymentInfo.PayToken) {
+        console.log("PAytoken=",paymentInfo.PayToken);
          setPayToken(paymentInfo.PayToken);
          setIsClicked(true);
        }
@@ -149,18 +150,7 @@ export default function Payment({
   }
 
 
-    //取得 Apple Pay 付款結果
-
-    const scriptContent = `
-    function getApplePayResultData(resultData, errMsg) {
-      if (resultData != null) {
-        alert(JSON.stringify(resultData));
-      } else {
-        console.error(errMsg);
-      }
-    }
-  `;
-  
+ 
 
   return (
     <div>
@@ -176,10 +166,7 @@ export default function Payment({
           </button>
         )}
       </div>
-      <h1>Apple Pay Result</h1>
-      {applepayresult}
 
-      <script dangerouslySetInnerHTML={{ __html: scriptContent }} />
     </div>
   );
 }
