@@ -129,10 +129,10 @@ export default function Payment({
   //SDK 取得 Paytoken
   function handleGetPayToken() {
 //如果是 Apple Pay
-function getApplePayResultData(resultData, errMsg) {
+window.getApplePayResultData = function(resultData, errMsg) {
   console.log(resultData);
   if(resultData != null){
- alert(JSON.stringify(resultData))
+ alert("JSON.stringify(resultData)")
   }
   if(errMsg){console.error(errMsg)}
 };
