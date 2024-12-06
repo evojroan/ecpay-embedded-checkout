@@ -129,15 +129,15 @@ export default function Payment({
   //SDK 取得 Paytoken
   function handleGetPayToken() {
 //1. 宣告函式
-// function getApplePayResultData(resultData, errMsg) {
-//   console.log(resultData);
-//   if(resultData != null){
-//   alert(JSON.stringify(resultData))
-//   }
-//   if(errMsg){
-//     alert(errMsg)
-//   }
-// };
+function getApplePayResultData(resultData, errMsg) {
+  console.log(resultData);
+  if(resultData != null){
+  alert(JSON.stringify(resultData))
+  }
+  if(errMsg){
+    alert(errMsg)
+  }
+};
 //2. 
     ECPay.getPayToken(function (paymentInfo, errMsg) {
 
@@ -154,15 +154,7 @@ export default function Payment({
 
     });
 
-    ECPay.getApplePayResultData(function(resultData, errMsg) {
-      console.log(resultData);
-      if(resultData != null){
-      alert(JSON.stringify(resultData))
-      }
-      if(errMsg){
-        alert(errMsg)
-      }
-    })
+    E
   }
 
 
