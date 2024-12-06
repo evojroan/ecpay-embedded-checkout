@@ -129,6 +129,14 @@ export default function Payment({
   //SDK 取得 Paytoken
   function handleGetPayToken() {
 //如果是 Apple Pay
+function getApplePayResultData(resultData, errMsg) {
+  console.log(resultData);
+  if(resultData != null){
+ alert(JSON.stringify(resultData))
+  }
+  if(errMsg){console.error(errMsg)}
+};
+getApplePayResultData()
 
 
    
@@ -140,7 +148,7 @@ export default function Payment({
          return;
        }
        if (paymentInfo.PayToken) {
-        console.log("PAytoken=",paymentInfo.PayToken);
+        console.log("Paytoken=",paymentInfo.PayToken);
          setPayToken(paymentInfo.PayToken);
          setIsClicked(true);
        }
