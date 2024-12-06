@@ -122,6 +122,7 @@ export default function Input({
         GetTokenByTradePayload
       );
 
+      console.log("Token=",response.data)
       setToken(response.data);
       navigate("/payment");
     } catch (error) {

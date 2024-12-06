@@ -135,8 +135,6 @@ export default function Payment({
 //如果不是 Apple Pay
     ECPay.getPayToken(function (paymentInfo, errMsg) {
 
- 
-
        if (errMsg) {
         console.error(errMsg);
          return;
@@ -149,8 +147,6 @@ export default function Payment({
     });
   }
 
-
- 
 
   return (
     <div>
