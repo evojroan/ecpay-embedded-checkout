@@ -130,7 +130,7 @@ export default function Payment({
   function handleGetPayToken() {
 //1. 宣告函式
 function getApplePayResultData(resultData, errMsg) {
-  alert("ApplePaid");
+
   alert("resultData=",resultData);
   if(resultData != null){
   alert(JSON.stringify(resultData))
@@ -151,11 +151,11 @@ function getApplePayResultData(resultData, errMsg) {
          setPayToken(paymentInfo.PayToken);
          setIsClicked(true);
        }
-       getApplePayResultData(resultData, errMsg)//此方法仍沒用
+       getApplePayResultData(PayToken, errMsg)//此方法仍沒用
 
     });
 
-    E
+    
   }
 
 
