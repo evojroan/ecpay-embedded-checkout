@@ -150,7 +150,7 @@ function getApplePayResultData(resultData, errMsg) {
          setPayToken(paymentInfo.PayToken);
          setIsClicked(true);
        }
-       getApplePayResultData(resultData, errMsg)
+       getApplePayResultData(resultData, errMsg)//此方法仍沒用
 
     });
 
@@ -161,7 +161,7 @@ function getApplePayResultData(resultData, errMsg) {
   return (
     <div>
       <h2>{translations[Language].pageTitle}</h2>
-
+MerchantTradeNo：${MerchantTradeNo}
       <div id="PaymentComponent">
         <div id="ECPayPayment"> </div>
         {paymentRendered && (
