@@ -37,7 +37,7 @@ export default function Payment({
 
   const translations = {
     [ECPay.Language.zhTW]: {
-      pageTitle: "綠界站內付 2.0 付款畫面",
+      pageTitle: "綠界站內付 2.0 付��畫面",
       pay: "付款",
       paying: "付款中",
     },
@@ -126,36 +126,32 @@ export default function Payment({
   }
 
 
+  function getApplePayResultData(resultData, errMsg) {
+
+    alert("resultData=",resultData);
+    if(resultData != null){
+    alert(JSON.stringify(resultData))
+    }
+    if(errMsg){
+      alert(errMsg)
+    }
+  };
+
   //SDK 取得 Paytoken
   function handleGetPayToken() {
-//1. 宣告函式
-function getApplePayResultData(resultData, errMsg) {
-
-  alert("resultData=",resultData);
-  if(resultData != null){
-  alert(JSON.stringify(resultData))
-  }
-  if(errMsg){
-    alert(errMsg)
-  }
-};
-//2. 
     ECPay.getPayToken(function (paymentInfo, errMsg) {
-
-       if (errMsg) {
+      if (errMsg) {
         console.error(errMsg);
-         return;
-       }
-       if (paymentInfo.PayToken) {
-        console.log("Paytoken=",paymentInfo.PayToken);
-         setPayToken(paymentInfo.PayToken);
-         setIsClicked(true);
-       }
-       getApplePayResultData(PayToken, errMsg)//此方法仍沒用
-
+        getApplePayResultData(null, errMsg);
+        return;
+      }
+      if (paymentInfo.PayToken) {
+        console.log("Paytoken=", paymentInfo.PayToken);
+        setPayToken(paymentInfo.PayToken);
+        setIsClicked(true);
+      }
+      getApplePayResultData(paymentInfo, null);
     });
-
-    
   }
 
 
