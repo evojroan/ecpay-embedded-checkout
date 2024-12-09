@@ -137,6 +137,11 @@ export default function Payment({
     // }
   };
 
+  function Testfunc(msg){
+    console.log(msg)
+    alert(msg)
+  }
+
   //SDK 取得 Paytoken
   function handleGetPayToken() {
     ECPay.getPayToken(function (paymentInfo, errMsg) {
@@ -150,6 +155,7 @@ export default function Payment({
         setPayToken(paymentInfo.PayToken);
         setIsClicked(true);
       }
+      Testfunc("OK")
       getApplePayResultData("0123");
     });
   }
