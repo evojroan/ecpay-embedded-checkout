@@ -130,7 +130,8 @@ export default function Payment({
   function handleGetPayToken() {
 //1. 宣告函式
 function getApplePayResultData(resultData, errMsg) {
-  console.log(resultData);
+  alert("ApplePaid");
+  alert("resultData=",resultData);
   if(resultData != null){
   alert(JSON.stringify(resultData))
   }
@@ -161,7 +162,7 @@ function getApplePayResultData(resultData, errMsg) {
   return (
     <div>
       <h2>{translations[Language].pageTitle}</h2>
-MerchantTradeNo：${MerchantTradeNo}
+MerchantTradeNo：{MerchantTradeNo}
       <div id="PaymentComponent">
         <div id="ECPayPayment"> </div>
         {paymentRendered && (
