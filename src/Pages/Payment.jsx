@@ -126,21 +126,21 @@ export default function Payment({
   }
 
 
+  window.getApplePayResultData = function(resultData, errMsg) {
+    console.log("Apple Pay 成功")
+    alert("Apple Pay 成功")
+      alert(resultData);
+      if (errMsg) {
+        console.error(errMsg);
+      }
+    };
+  
 
 
   //SDK 取得 Paytoken
   function handleGetPayToken() {
     ECPay.getPayToken(function (paymentInfo, errMsg) {
 
-      function getApplePayResultData (resultData, errMsg) {
-        console.log("Apple Pay 成功")
-        alert("Apple Pay 成功")
-          alert(resultData);
-          if (errMsg) {
-            console.error(errMsg);
-          }
-        };
-      
 
 
 
