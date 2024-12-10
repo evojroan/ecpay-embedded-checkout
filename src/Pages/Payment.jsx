@@ -135,14 +135,14 @@ export default function Payment({
   //     }
   //   };
   
-  // function getApplePayResultData(resultData, errMsg) {
-  //   console.log("Apple Pay 成功console window")
-  //   alert("Apple Pay 成功alert window")
-  //     alert(resultData);
-  //     if (errMsg) {
-  //       console.error(errMsg);
-  //     }
-  //   };
+  window.getApplePayResultData = function(resultData, errMsg) {
+    console.log("Apple Pay 成功")
+    alert(`Apple Pay 成功,${JSON.stringify(resultData)}`)
+    
+      if (errMsg) {
+        console.error(errMsg);
+      }
+    };
 
   //SDK 取得 Paytoken
   function handleGetPayToken() {
@@ -154,14 +154,7 @@ export default function Payment({
         return;
       }
       if (paymentInfo.PayToken) {
-        function getApplePayResultData(resultData, errMsg) {
-          console.log("Apple Pay 成功console window")
-          alert("Apple Pay 成功alert window")
-            alert(resultData);
-            if (errMsg) {
-              console.error(errMsg);
-            }
-          };
+     
         console.log("Paytoken=", paymentInfo.PayToken);
         setPayToken(paymentInfo.PayToken);
         setIsClicked(true);
