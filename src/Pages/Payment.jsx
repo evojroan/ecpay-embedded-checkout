@@ -125,22 +125,14 @@ export default function Payment({
     }
   }
 
-
-  function getApplePayResultData(resultData) {
-
-    alert("resultData=",resultData);
-    if(resultData != null){
-    alert(JSON.stringify(resultData))
+ function getApplePayResultData (resultData, errMsg) {
+    alert(resultData);
+    if (errMsg) {
+      console.error(errMsg);
     }
-    // if(errMsg){
-    //   alert(errMsg)
-    // }
   };
 
-  function Testfunc(msg){
-    console.log(msg)
-    alert(msg)
-  }
+
 
   //SDK 取得 Paytoken
   function handleGetPayToken() {
@@ -155,16 +147,15 @@ export default function Payment({
         setPayToken(paymentInfo.PayToken);
         setIsClicked(true);
       }
-      Testfunc("OK")
-      getApplePayResultData("0123");
+
+      
     });
   }
-
 
   return (
     <div>
       <h2>{translations[Language].pageTitle}</h2>
-MerchantTradeNo：{MerchantTradeNo}
+      MerchantTradeNo：{MerchantTradeNo}
       <div id="PaymentComponent">
         <div id="ECPayPayment"> </div>
         {paymentRendered && (
@@ -175,7 +166,6 @@ MerchantTradeNo：{MerchantTradeNo}
           </button>
         )}
       </div>
-
     </div>
   );
 }
