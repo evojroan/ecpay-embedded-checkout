@@ -135,13 +135,6 @@ export default function Payment({
   //     }
   //   };
   
-
-
-  //SDK 取得 Paytoken
-  function handleGetPayToken() {
-    ECPay.getPayToken(function (paymentInfo, errMsg) {
-
-      
   function getApplePayResultData(resultData, errMsg) {
     console.log("Apple Pay 成功console window")
     alert("Apple Pay 成功alert window")
@@ -151,9 +144,11 @@ export default function Payment({
       }
     };
 
+  //SDK 取得 Paytoken
+  function handleGetPayToken() {
+    ECPay.getPayToken(function (paymentInfo, errMsg) {
 
-
-      if (errMsg) {
+       if (errMsg) {
         console.error(errMsg);
       
         return;
