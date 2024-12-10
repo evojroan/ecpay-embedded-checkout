@@ -126,9 +126,9 @@ export default function Payment({
   }
 
 
-  function getApplePayResultData(resultData, errMsg) {
-    console.log("Apple Pay 成功console")
-    alert("Apple Pay 成功alert")
+  window.getApplePayResultData = function(resultData, errMsg) {
+    console.log("Apple Pay 成功console window")
+    alert("Apple Pay 成功alert window")
       alert(resultData);
       if (errMsg) {
         console.error(errMsg);
