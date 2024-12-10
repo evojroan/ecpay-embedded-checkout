@@ -126,7 +126,23 @@ export default function Payment({
   }
 
 
-  window.getApplePayResultData = function(resultData, errMsg) {
+  // window.getApplePayResultData = function(resultData, errMsg) {
+  //   console.log("Apple Pay 成功console window")
+  //   alert("Apple Pay 成功alert window")
+  //     alert(resultData);
+  //     if (errMsg) {
+  //       console.error(errMsg);
+  //     }
+  //   };
+  
+
+
+  //SDK 取得 Paytoken
+  function handleGetPayToken() {
+    ECPay.getPayToken(function (paymentInfo, errMsg) {
+
+      
+  function getApplePayResultData(resultData, errMsg) {
     console.log("Apple Pay 成功console window")
     alert("Apple Pay 成功alert window")
       alert(resultData);
@@ -134,12 +150,6 @@ export default function Payment({
         console.error(errMsg);
       }
     };
-  
-
-
-  //SDK 取得 Paytoken
-  function handleGetPayToken() {
-    ECPay.getPayToken(function (paymentInfo, errMsg) {
 
 
 
