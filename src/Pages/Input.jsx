@@ -25,7 +25,7 @@ export default function Input({
   const [isClicked, setIsClicked] = useState(false);
   const price = 100;
   const PaymentUIType = 2;
-  const ChoosePaymentList = 7;
+  const ChoosePaymentList = 0;
   const ReturnURL = `${backendurl}/ReturnURL`;
   const OrderResultURL = `${backendurl}/OrderResultURL`;
   const latestMerchantTradeNo = `emb${getCurrentTime().string}`;
