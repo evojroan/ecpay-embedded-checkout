@@ -25,7 +25,7 @@ export default function App() {
     return {time, string};
   }
 
-  const [MerchantID, setMerchantID] = useState("1099236");
+  const [MerchantID, setMerchantID] = useState("3002607");
   const [Token, setToken] = useState("");
   const [Language, setLanguage] = useState(ECPay.Language.zhTW); //ECPay.Language.enUS
   const [ServerType, setServerType] = useState("Stage");
